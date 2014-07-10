@@ -1,3 +1,4 @@
 /dude-js/*
 /node_modules/*
 /public/bower_components/*
+/.config.json
