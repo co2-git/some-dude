@@ -1,0 +1,123 @@
+extends ../layouts/post
+
+block post
+  p Implemented in 
+    a(href='http://www.ecma-international.org/ecma-262/5.1/#sec-15.4.4.18' target='_blank') EcmaScript version 5.1
+    |, 
+    a(href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach' target='_blank') forEach
+    |  is a long awaited function in JavaScript to be able to walk an array. Before, you had to use 
+    code for
+    |  to do just that.
+
+  pre.language-javascript
+    code.language-javascript.
+      
+      var arr = [1, 2, 3];
+
+      // with for
+      for ( var i = 0; i < arr.length; i ++ ) {
+        console.log(arr[i]);
+      }
+
+      // with forEach
+      arr.forEach(function (item) {
+        console.log(item);
+      });
+
+
+
+  p I reckon lots of us think using 
+    code forEach
+    |  is more readable than using 
+    code for
+    |  - hence better. We have to keep in mind that they don't do exactly the same thing.
+
+  h2 The Scope! Always the Scope!
+
+  p By using a closure, 
+    code forEach
+    |  does not pollute the global namespace and its scope is garbage collected, freeing memory, when 
+    code for
+    |  pollutes the global namespace, hence producing more heaping.
+
+  pre.language-javascript
+    code.language-javascript.
+      
+      for ( var i = 0; i < arr.length; i ++ ) {
+        // ...
+      }
+
+      console.log(i); // 3 // the var i still exists
+
+      arr.forEach(function (item) {
+        // ...
+      });
+
+      console.log(item); // ReferenceError: item is not defined
+      // what happens in a function ... stays in a function
+
+
+
+  h2 Let it be!
+
+  p JavaScript 1.7 shipped with a new construct, called 
+    a(href='https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let' target='_blank') let
+    |  that allows us to use 
+    code for
+    |  without polluting the global namespace. Note that at the time of writing, 
+    a(href='http://stackoverflow.com/questions/2356830/what-browsers-currently-support-javascripts-let-keyword' target='_blank') most browsers do not support let yet
+    |  . 
+
+  pre.language-javascript
+    code.language-javascript.
+      
+      for ( let i = 0; i < arr.length; i ++ ) {
+        // ...
+      }
+
+      console.log(i); // ReferenceError: i is not defined
+
+
+  h2 Performance
+
+  pre.language-javascript
+    code.language-javascript.
+      // Creating a big array
+
+      for ( var i = 0, arr = []; i < 99999; i ++ ) {
+        arr.push(i);
+      }
+
+      // Benchmarking for
+      console.time('for');
+
+      for ( var j = 0; j < arr.length; j ++ ) {
+        console.log(arr[j]);
+      }
+
+      console.timeEnd('for');
+
+      // Benchmarking forEach
+      console.time('forEach');
+
+      arr.forEach(function (i) {
+        console.log(i);
+      });
+
+      console.timeEnd('forEach');
+
+      // Results:
+
+      for: 1360ms
+      forEach: 1474ms
+
+
+
+
+
+
+  p As you can see, 
+    code for
+    |  is slightly faster than 
+    code forEach
+    | .

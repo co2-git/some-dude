@@ -1,0 +1,30 @@
+extends ../layouts/layout
+
+block page
+  .row
+    .columns.small-12
+      hr
+      img.right(alt=project.name src='/cdn/images/projects/' + project.codename + '/logo.png')
+      
+      h1
+        a(href=project.url target='_blank')=project.name
+      
+      h2=project.tagline
+      p
+        big=project.nutshell
+
+  .row
+    .columns.small-12.medium-6
+
+      h3 My roles in this project
+
+      ul
+        each role in project.roles
+          li=role.key
+
+    .columns.small-12.medium-6
+
+      h3 Built with
+
+      each techno in project.technos
+        button=techno.key

@@ -1,0 +1,47 @@
+{
+  "build": {
+    "browserify": [
+      {
+        "source": [
+          "js/app.js"
+        ],
+        "dest": "public/cdn/js/app.js"
+      }
+    ],
+    "sass": [
+      {
+        "source": [
+          "scss/francois.scss"
+        ],
+        "dest": "public/cdn/css/francois.min.css"
+      }
+    ],
+    "uglify": [
+      {
+        "source": [
+          "public/bower_components/foundation/js/vendor/fastclick.js",
+          "public/bower_components/foundation/js/foundation/foundation.js",
+          "public/bower_components/foundation/js/foundation/foundation.dropdown.js",
+          "public/bower_components/foundation/js/foundation/foundation.magellan.js",
+          "public/bower_components/foundation/js/foundation/foundation.topbar.js"
+        ],
+        "dest": "public/cdn/js/foundation.min.js"
+      }
+    ]
+  },
+  "start": [
+    {
+      "service": "mongodb",
+      "arguments": [
+        "--dbpath", "data", "--port", "33368"
+      ]
+    },
+    {
+      "service": "server.js",
+      "arguments": []
+    }
+  ],
+  "dependencies": {
+    "mongodb": "2.6.1"
+  }
+}

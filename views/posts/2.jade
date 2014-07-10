@@ -1,0 +1,62 @@
+extends ../layouts/post
+
+block post
+  p As far as I know, there are three ways to deal with asynchronous code without expressly forking a new child:
+
+  ul
+    li Callback
+    li
+      a(href='http://promisesaplus.com/' target='_blank') Promises
+    li
+      a(href='http://nodejs.org/api/events.html' target='_blank') Events
+
+  p Callbacks are the most often encountered. To deal with errors, the standard way is to pass any eventual error as the first argument of the callback. If nothing bad had happened, this first argument is null.
+
+  pre.language-javascript
+    code.language-javascript.
+      
+      // An example of using callbacks
+      require('fs').stat(someFile, function (error, stat) {
+        if ( error ) throw error;
+        // else, if error evaled to false, we carry on
+        console.log('stat OK', stat);
+      });
+
+
+  p This way of coding creates code redundancy because you have to write code to catch the eventual error in all your callbacks. If you are writing your code 
+    a(href='/blog/1/domains-in-javascript-or-how-to-try-catch-errors-in-asynchronous-code') inside domains
+    |, you can use 
+    a(href='http://nodejs.org/api/domain.html#domain_domain_intercept_callback' target='_blank') intercept
+    |  to implicitly catch the error if any.
+
+  pre.language-javascript
+    code.language-javascript.
+
+      var domain = require('domain').create();
+
+      domain.on('error', function (error) {
+        // Do something with the error
+        /* For example if there is a stat error in our code below
+            it will be caught here */
+      });
+
+      domain.run(function () {
+        require('fs').stat(someFile, domain.intercept(function (stat) {
+          
+          /* You don't have to write code anymore to catch any eventual errors.
+            Domain has automatically intercepted the error if any :)
+            Hence you can safely assume everything is sailing smoothly 
+            and carry on with your code */
+
+          console.log('stat OK', stat);
+        }));
+
+        // more code ...
+      });
+      
+
+      
+
+
+hr
+      

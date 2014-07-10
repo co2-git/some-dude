@@ -1,0 +1,32 @@
+extends layout
+
+block page
+  .row.post-page
+    .columns.small-12
+      
+      h1=post.title
+
+      .panel.radius.callout
+        big=post.blurb
+
+      block post
+
+      p.text-right
+
+        span.label.round Languages
+
+        span  
+
+        each language in post.languages
+          a.button.secondary.small(href='/blog/search/language/' + language.key)=language.key
+          span 
+
+        span  
+
+        span.label.round Tags
+
+        span  
+
+        each tag in post.tags
+          a.button.secondary.small(href='/blog/search/tag/' + tag.key)=tag.key
+          span

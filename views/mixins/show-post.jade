@@ -1,0 +1,41 @@
+//- *** MIXIN SHOW POST ***
+//- ---------------------
+//- @abstract       Function to display a blog post
+//- @param          Object post
+//- @param          String view (preview)
+
+mixin show-post(post, view)
+  //- *** PREVIEW VIEW ***
+  //- ---------------------
+  - if ( view === 'preview' )
+    .row.post
+      .columns.small-12
+        h2
+          a(href='/blog/' + post.id + '/' + post.slug)=post.title 
+
+        p.text-center Posted 
+          code=fromNow(post.time.posted)
+          | .
+
+        p
+          big=post.blurb
+
+        p
+
+          span.label.round Languages
+
+          span  
+
+          each language in post.languages
+            a.label.secondary.round(href='/blog/search/language/' + language.key)=language.key
+            span 
+
+          span  
+
+          span.label.round Tags
+
+          span  
+
+          each tag in post.tags
+            a.label.secondary.round(href='/blog/search/tag/' + tag.key)=tag.key
+            span

@@ -1,0 +1,49 @@
+extends ../layouts/layout
+
+block page
+  .row
+    .columns.small-12
+      p.panel.callout
+        i.fa.fa-life-bouy
+        big Click a button to include it in / exclude if from the search.
+
+      form(name='advanced-search' method='POST')
+
+        h2 Type 
+          a(href) all
+          span  
+          a(href) none
+
+        button.round.type(type='button')
+          i.fa.fa-flask
+          span  Tut
+
+        button.round.type(type='button')
+          i.fa.fa-code
+          span  Blog
+
+        h2 Language 
+          a(href) all
+          span  
+          a(href) none
+
+        each language in languages
+          button.round.secondary.language(type='button')=language
+
+        h2 Tags 
+          a(href) all
+          span  
+          a(href) none
+
+        input(type='text' placeholder='Filter tags')
+
+        each tag in tags
+          button.round.secondary.tag(type='button')=tag
+
+        hr
+
+        button.radius.expand.large Search
+
+        input(type='hidden' name='advanced' value='1')
+        input(type='hidden' name='languages')
+        input(type='hidden' name='tags')

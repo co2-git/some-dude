@@ -1,0 +1,42 @@
+//- *** LAYOUT ***
+//- ---------------------
+extends ../layouts/layout
+
+//- *** MIXINS ***
+//- ---------------------
+include ../mixins/show-post
+
+//- *** PAGE ***
+//- ---------------------
+block page
+  .row
+    .columns.small-12
+
+      //
+        h1 Blog
+
+        hr
+
+        form(method='post' action='/blog/search' name='search-blog')
+          input(type='search' role='search' placeholder='Search blog...' required name='search'
+            value=(keyword || '') autofocus)
+
+          .row.collapse
+            .columns.small-12
+              button.expand.radius(type='submit')
+                i.fa.fa-search
+                span  Search
+
+      mixin show-post-two-by-two (post)
+        .columns.small-12.medium-6
+          +show-post(post, 'preview')
+
+      - var i = 0
+      each post in posts
+        if (  (i % 2) )
+          .row
+            +show-post-two-by-two(post)
+        else
+          +show-post-two-by-two(post)
+
+        - i ++

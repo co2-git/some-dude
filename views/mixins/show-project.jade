@@ -1,0 +1,66 @@
+//- *** MIXIN SHOW PROJECT ***
+//- ---------------------
+//- @abstract       Function to display a project
+//- @param          Object project
+//- @param          String view (highlight|intro)
+
+mixin show-project (project, view)
+  //- *** HIGHLIGHT ***
+  //- ---------------------
+  - if ( view === 'highlight' )
+    .row
+      .columns.small-12
+        section.project
+          .row
+            .columns.small-12.medium-6
+              //- *** PROJECT HEADER ***
+              //- ---------------------
+              h2
+                span=project.name
+                span  
+                small=project.tagline
+
+              div.text-center
+                img(alt=project.name src='/cdn/images/projects/' + project.codename + '/logo.png')
+
+            .columns.small-12.medium-6
+              //- *** PROJECT INFO ***
+              //- ---------------------
+              h3 About project
+              p
+                big=project.nutshell
+
+              h3 URL
+
+              p
+                a(href=project.url target='_blank')=project.url
+
+              h3 Built with
+
+              button=project.technos[0].key
+              button=project.technos[1].key
+              button=project.technos[2].key
+
+          .row
+            .columns.small-12
+              a.button.expand.large.alert.radius(href='/projects/' + project.codename) More
+
+  - if ( view === 'intro' )
+    .row
+      .columns.small-12
+        section.project
+            h2
+              span=project.name
+              span  
+              small=project.tagline
+
+            div.text-center
+              img(alt=project.name src='/cdn/images/projects/' + project.codename + '/logo.png')
+
+            h3 About project
+            p
+              big=project.nutshell
+
+          .row
+            .columns.small-12
+              a.button.expand.large.alert.round(href='/projects/' + project.codename) More

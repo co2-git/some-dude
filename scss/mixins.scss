@@ -1,0 +1,12 @@
+/* http://codeboxers.com/straight-sass-gradient-mixin/ */
+
+@mixin linear-gradient($fromColor, $toColor, $dir: top) {
+  background-color: $toColor; /* Fallback Color */
+  background-image: -webkit-gradient(linear, left top, left bottom, from($fromColor), to($toColor)); /* Saf4+, Chrome */
+  background-image: -webkit-linear-gradient($dir, $fromColor, $toColor); /* Chrome 10+, Saf5.1+, iOS 5+ */
+  background-image:    -moz-linear-gradient($dir, $fromColor, $toColor); /* FF3.6 */
+  background-image:     -ms-linear-gradient($dir, $fromColor, $toColor); /* IE10 */
+  background-image:      -o-linear-gradient($dir, $fromColor, $toColor); /* Opera 11.10+ */
+  background-image:         linear-gradient($dir, $fromColor, $toColor);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#{$fromColor}', EndColorStr='#{$toColor}');
+}

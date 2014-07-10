@@ -1,0 +1,41 @@
+//- *** LAYOUT ***
+//- ---------------------
+extends ../layouts/layout
+
+//- *** MIXINS ***
+//- ---------------------
+include ../mixins/show-project
+include ../mixins/show-post
+
+//- *** PAGE ***
+//- ---------------------
+block page
+  .row
+    .columns.small-12.medium-8
+
+      //- *** PROJECTS ***
+      //- ---------------------
+      a.button.expand.large.round(href='/projects') Projects
+
+      .row.projects
+        .columns.small-12
+          +show-project(project, 'intro')
+
+      
+      //- *** BLOG POSTS ***
+      //- ---------------------
+      a.button.expand.large.round(href='/blog') Blog
+
+      each post in posts
+        +show-post(post, 'preview')
+
+    .columns.small-12.medium-4
+
+      //- *** SKILLS ***
+      //- ---------------------
+      button.expand.large.round Skills
+
+      .row
+        each skill in skills
+          .columns.small-6.medium-12.large-6
+            button.secondary.expand.round(class=skill.level >= 3 ? 'large' : '')=skill.name

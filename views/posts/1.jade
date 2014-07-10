@@ -1,0 +1,57 @@
+extends ../layouts/post
+
+block post
+  p One of JavaScript most attractive trait is its natural inclination towards asynchronous code. A bunch of stuff can be done parallely at the same time instead of one at the time - which is slower. However, jumping from traditional synchronous (or blocking) code to asynchronous can be tedious. For example if you throw an error in an asynchronous code, it is most likely that it escalades without being caught and kill your JavaScript code altogether
+
+  pre.language-javascript
+    code.language-javascript.
+      // This is synchronous and will work
+
+      try {
+        throw new Error('Catch me!');
+      }
+      catch ( error ) {
+        // Error gets caught
+        console.log('Caught error', error.message);
+      }
+
+      // Asynchronous now
+
+      try {
+        setTimeout(function () {
+          throw new Error('Catch me!');
+        });
+      }
+      catch ( error ) {
+        // This will not catch the error
+      }
+
+
+  p Basically the code inside the setTimeout function is being called in another scope (tick) that is outside the try/catch block. Luckily NodeJS provides us with a robust way to deal with that: 
+    a(href='http://nodejs.org/api/domain.html' target='_blank') domains
+    |. Note that domains can also be used in the browser with 
+    a(href='http://browserify.org/' target='_blank') browserify
+    |. This is how to do it:
+
+  pre.language-javascript
+    code.language-javascript.
+      // We create a new domain. A domain will wrap everything (synchronous AND asynchronous)
+      var domain = require('domain').create();
+
+      // This is where we will handle ANY errors thrown inside our domain
+      domain.on('error', function (error) {
+        console.log('Got Error!', error);
+      });
+
+      // Run our code inside the domain
+      domain.run(function () {
+        setTimeout(function () {
+          // This will be caught by our domain error handler
+          throw new Error('Catch me!');
+        });
+      });
+
+
+
+
+  hr

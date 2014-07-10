@@ -1,0 +1,107 @@
+extends ../layouts/post
+
+block post
+  p 
+    a(href='http://browserify.org' target='_blank') Browserify
+    |  is taking your JavaScript development to an all new level. Check out the following tree:
+
+  pre.
+    |_ index.html
+    |_ app/
+      |_ index.js
+      |_ controllers/
+        |_ user.js
+
+  h2 Before browserify
+
+  pre
+    code.language-markup.
+      
+      &lt;!-- index.html -->
+
+      &lt;script src='/app/controllers/user.js'>&lt;/script>
+      &lt;script src='/app/index.js'>&lt;/script>
+
+
+
+  pre.language-javascript
+    code.language-javascript.
+      
+      // index.js
+
+      User.get(function (users) {
+        // Do something
+      });
+
+
+
+
+  pre.language-javascript
+    code.language-javascript.
+
+      // controllers/user.js
+
+      var User = {
+        get: function (callback) {
+          // Do something
+        }
+      };
+
+
+
+  h2 With browserify
+
+  pre.language-markup
+    code.language-markup.
+      
+      &lt;!-- index.html -->
+
+      &lt;script src='/app/bundle.js'>&lt;/script>
+
+
+
+  pre.language-javascript
+    code.language-javascript.
+      
+      // index.js
+
+      require('./controllers/user').get(function (users) {
+        // Do something
+      });
+
+
+
+
+  pre.language-javascript
+    code.language-javascript.
+
+      // controllers/user.js
+
+      exports.get = function (callback) {
+        // Do something
+      };
+
+
+  h2 Advantages
+
+  ul
+    li Does not pollute global namespace
+    li No need to use 
+      code script src
+      |   for all your files, hence speeding up your development
+    li Access a bunch of npm modules!
+
+
+  h2 How does it work?
+
+  p You need to have Node installed.
+
+  pre.language-bash
+    code.language-bash.
+      
+      npm install -g browserify
+
+      browserify app/index.js > app/bundle.js
+
+
+  hr

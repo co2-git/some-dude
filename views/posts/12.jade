@@ -1,0 +1,15 @@
+extends ../layouts/post
+
+block post
+  pre.language-bash
+    code.language-bash.
+
+      # Route all requests from port 80 to port 1028 while keeping responding from Port 80
+
+      iptables -t nat -I PREROUTING --source 0/0 --destination 0/0 -p tcp --dport 80 -j REDIRECT --to-ports 1028
+
+
+
+  p This allows the traffic to be rerouted to anpther port. The difference here between redirecting and rerouting lies in the fact that in redirecting the client it will be physically redirected to port B while in rerouting, the client still talks with port A and there is no URL redirect.
+
+  hr

@@ -1,0 +1,11 @@
+extends ../layouts/layout
+
+block page
+  .row
+    .columns.small-12
+      h1 Oops! Something bad happened!
+
+      - if ( env === 'development' )
+        h2=error.message
+
+        pre=error.stack

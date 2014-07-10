@@ -1,0 +1,100 @@
+extends ../layouts/post
+
+block post
+  h2 Scope
+
+  p In PHP, functions have isolated scope. That means any variable previously declared in the function's parent scope won't be passed to the function.
+
+  pre.language-php
+    code.language-php.
+
+      $someVar = 1;
+
+      function someFunction () {
+        return $someVar;
+      }
+
+      someFunction();
+      
+      //  PHP Notice:  Undefined variable: someVar
+
+
+
+
+  p That's the first rule of functions in PHP: 
+    strong A function is isolated and oblivious from the global scope.
+
+
+  p Also, whatever gets declared into the function does not get passed back to the parent scope:
+
+  pre.language-php
+    code.language-php.
+
+      function someFunction () {
+        $localVar = 'foo';
+      }
+
+      someFunction();
+
+      echo $localVar;
+      
+      //  PHP Notice:  Undefined variable: localVar
+
+
+
+
+  p This is the second rule of functions in PHP: 
+    strong Whatever happens in a function stays in this function.
+
+  p Basically these first two rules emphasize the fact that scope in PHP functions is 
+    strong 100% local.
+
+  h2 Make functions communicate with other scopes
+
+  h3 One-way binding
+
+  p If you want your function to be aware of a variable, you can pass this variable as an argument of your function:
+
+  pre.language-php
+    code.language-php.
+
+      $someVar = 1;
+
+      function someFunction ($someVar) {
+        return $someVar;
+      }
+
+      echo someFunction($someVar);
+
+      // print 1
+
+
+
+
+  h2 Two-way binding
+
+  p Sometimes you want your functions to modify a value and make this change persistent outside the function. For that, you will 
+    a(href='http://www.php.net/manual/en/functions.arguments.php#functions.arguments.by-reference' target='_blank') pass it by reference 
+    |  appending a 
+    code &
+    |   to your argument.
+
+  pre.language-php
+    code.language-php.
+
+      $someVar = 1;
+
+      function someFunction (&$someVar) {
+        $someVar ++;
+      }
+
+      someFunction($someVar);
+
+      echo $someVar;
+
+      // prints 2
+
+
+
+
+  hr

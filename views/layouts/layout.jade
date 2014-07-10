@@ -1,0 +1,87 @@
+block document
+  
+  //- Doctype
+  doctype html
+
+  //- Encoding
+  meta(charset='utf-8')
+
+  block meta
+
+    //- Title
+    title=config.title
+
+    //- IE
+    meta(http-equiv="X-UA-Compatible" content="IE=edge")
+
+    //- Viewport
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+
+    block meta-robot
+      //- Meta title
+      meta(name='title' content=title)
+
+      //- Meta description
+      meta(name='description' content=description)
+
+    //- Environment
+    meta(env=env)
+
+  //- Stylesheets
+  block stylesheets
+    link(rel='stylesheet' href='/cdn/css/francois.min.css')
+    link(rel='stylesheet' href='/bower_components/font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet' href='/vendors/LeaVerou/prism/prism.min.css')
+
+  //- Banner
+  header(role='banner')
+    .row
+      .columns.small-12
+
+        h1.text-center
+          a(href='/') some dude  
+
+    .row
+      .columns.small-12
+        nav(role='menubar')
+          ul.small-block-grid-3
+            li(class=( page === 'tuts' ? 'active' : ''))
+              a.button.expand.secondary(href='/tuts')
+                i.fa.fa-flask
+                span  tuts
+            li(class=( page === 'blog' ? 'active' : ''))
+              a.button.expand.secondary(href='/blog')
+                i.fa.fa-code
+                span  blog
+            li(class=( page === 'search' ? 'active' : ''))
+              a.button.expand.secondary(href='/search')
+                i.fa.fa-search
+                span  search
+
+  //- Page
+  section(role='main')
+    block page
+
+  ///- Footer
+  footer(role='contentinfo')
+    .row
+      .columns.small-12.text-center
+        hr
+        span=pkg.name 
+        span  v
+        span=pkg.version
+
+  //- Scripts
+  block scripts
+    // script(src="http://cdn.sockjs.org/sockjs-0.3.min.js")
+
+    script(src='/bower_components/jquery/dist/jquery.min.js')
+    
+    script(src='/cdn/js/foundation.min.js')
+
+    script(src='/vendors/LeaVerou/prism/prism.min.js')
+      
+    - if ( env === 'production' )
+      script(src='/cdn/js/app.min.js')
+    - else
+      script(src='/cdn/js/app.js')

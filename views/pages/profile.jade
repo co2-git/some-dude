@@ -1,0 +1,84 @@
+//- *** LAYOUT ***
+//- ---------------------
+extends ../layouts/layout
+
+//- *** PAGE ***
+//- ---------------------
+block page
+  .row
+    .columns.small-12
+      div(data-magellan-expedition='fixed')
+        div.button-bar.sub-nav
+          ul.button-group.radius
+            li(data-magellan-arrival='about-me')
+              a.button.small(href='#about-me') About Me
+            li(data-magellan-arrival='skills')
+              a.button.small(href='#skills') Skills
+            li(data-magellan-arrival='social')
+              a.button.small(href='#social') Social
+
+  a(name='about-me')
+  .row(data-magellan-destination='about-me')
+    .columns.small-12
+      h2 About Me
+
+      p I have been developing stuff for the web since 1998.
+      
+      h3 My roles:
+      
+      ul
+        li Front End developer
+        li Back End developer and DB analyst
+        li Ops and SysAdmin
+        li Project Manager & CTO
+      
+      h3 I speak
+      
+      ul
+        li English
+        li French
+        li Spanish
+        li Italian
+        li Catalan
+      
+      p When I am not out there travelling this beautiful earth, you can find me in Barcelona.
+      
+      h3 The kind of projects I'm into
+      
+      ul
+        li Educational games for kids
+        li Applications oriented towards health and medecine
+        li Scientific stuff that can find an everyday life use
+        li Something that is not boring (like something not corporate)
+
+  a(name='skills')
+  .row(data-magellan-destination='skills')
+    .columns.small-12
+      h2 Skills
+
+      table
+        thead
+          tr
+            th Skill
+            td Years of experience
+            td Level
+
+        tbody
+          each skill in profile.skills
+            tr
+              th=skill.name
+              td=skill['years of experience']
+              td
+                - for ( var i = 0; i < skill.level; i ++ )
+                  i.fa.fa-star
+
+  a(name='social')
+  .row(data-magellan-destination='social')
+    .columns.small-12
+      h2 Social
+
+      each social in profile.social
+        button.expand.secondary
+          i.fa(class='fa-' + social.fa)
+          span  
+          span=social.name

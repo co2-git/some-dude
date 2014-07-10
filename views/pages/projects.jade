@@ -1,0 +1,15 @@
+//- *** LAYOUT ***
+//- ---------------------
+extends ../layouts/layout
+
+//- *** MIXINS ***
+//- ---------------------
+include ../mixins/show-project
+
+//- *** PAGE ***
+//- ---------------------
+block page
+  .row.projects
+    .columns.small-12
+      each project in projects
+        +show-project(project, 'highlight')

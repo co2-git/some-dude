@@ -1,0 +1,17 @@
+extends ../layouts/post
+
+block post
+  pre.language-javascript
+    code.language-javascript.
+
+      var compress = require('compression');
+
+      app.use(compress());
+
+
+
+  p For older versions of Express, check this 
+    a(href='http://inspiredjw.com/do-not-forget-to-use-gzip-for-express/' target='_blank') post
+    | .
+
+  hr

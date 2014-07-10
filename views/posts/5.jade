@@ -1,0 +1,393 @@
+extends ../layouts/post
+
+block post
+  p JavaScript offers various array functions that are available as Array prototypes. You can enumerate all these functions with this snippet:
+
+  pre.language-javascript
+    code.language-javascript.
+
+      Object.getOwnPropertyNames(Array.prototype).filter(function (proto) {
+        return typeof Array.prototype[proto] === 'function';
+      });
+
+
+      
+  p Here we will see different types of functions
+
+  ul
+    li 
+      b Array analyzers
+      p They return boolean information about an array
+        ul
+          li 
+            code Array.some
+          li 
+            code Array.every
+
+    li 
+      b Array mappers
+      p They create an array from another one. In the process, they either
+        ul
+          li modify the array items (
+            code Array.map
+            | )
+          li remove some items (
+            code Array.filter
+            | )
+          li reorder the items (
+            code Array.sort
+            | )
+
+    li
+      b Array walkers
+      p They walk the array to retrieve any type of information from them.
+      ul
+        li
+          code Array.reduce
+
+
+  h2 Array.some
+
+  p Use 
+    code Array.some
+    |   to verify that at least one item in your array satisfies a condition. The callback function should return true if condition is satisfied, false otherwise.
+
+
+  pre.language-javascript
+    code.language-javascript.
+
+      var arr = [1, 2, 3, 4, 5, 6];
+
+      // Is there at least one element in arr bigger than 5?
+
+      var test = arr.some(function (number) {
+        return number > 5;
+      });
+
+      console.log(test); // true
+
+      // Is there at least one element in arr bigger than 10?
+
+      test = arr.some(function (number) {
+        return number > 10;
+      });
+
+      console.log(test); // false
+
+
+
+  h2 Array.every
+
+  p In 
+    code Array.every
+    |  you want to make sure every elements are satisfying the condition. The callback function should return true if condition is satisfied, false otherwise.
+
+
+  pre.language-javascript
+    code.language-javascript.
+
+      var users = [
+        { id: 10, connected: true, active: true },
+        { id: 21, connected: true, active: true },
+        { id: 108, connected: true, active: true },
+        { id: 42, connected: false, active: true }
+      ];
+
+      // Are every users connected?
+
+      var test = users.every(function (user) {
+        return user.connected;
+      });
+
+      console.log(test); // false
+
+      // Are every users active?
+
+      test = users.every(function (user) {
+        return user.active;
+      });
+
+      console.log(test); // true
+
+
+  h2 Array.map
+
+  p
+    code Array.map
+    |  allows us to create an array from an other array. It is basically like moving items from Group A (the array) to Group B (the resulting array) with the possibility of modifying the items in the process. At the end, there must be the same numbers of items in Group A and Group B, but these items can be different. The callback function should return the item, modified or not.
+
+  pre.language-javascript
+    code.language-javascript.
+
+      // create an array from numbers but make sure non-numeric values are replaced by 0
+
+      [1, 2, null].map(function (number) {
+        if ( typeof number === 'number' ) {
+          return number;
+        }
+        else {
+          return 0;
+        }
+      });
+
+      // [1, 2, 0]
+
+
+
+
+  h2 Array.filter
+
+  p
+    code Array.filter
+    |   is like 
+    code Array.map
+    |   in the sense that it lets us create an array from another one, but this time we can remove items in the process - but not modify them. The callback function should return true if item should be retained in Group B, false otherwise.
+
+  pre.language-javascript
+    code.language-javascript.
+
+      var users = [
+        { id: 10, connected: true, active: true },
+        { id: 21, connected: true, active: true },
+        { id: 108, connected: true, active: true },
+        { id: 42, connected: false, active: true }
+      ];
+
+      var connected_users = users.filter(function (user) {
+        return user.connected;
+      });
+
+      console.log(connected_users);
+
+      [
+        { id: 10, connected: true, active: true },
+        { id: 21, connected: true, active: true },
+        { id: 108, connected: true, active: true }
+      ]
+
+
+
+
+  h2 Array.sort
+
+  p
+    code Array.sort
+    |   takes an array and creates a new one by sorting the items order.
+
+
+  pre.language-javascript
+    code.language-javascript.
+
+      /* Sort this array naturally */
+
+      [ 2, 8, 5, 44, 23 ].sort();
+
+      // [2, 5, 6, 23, 44]
+
+      /* sort this array alphabetically */
+
+      ['oranges', 'apples', 'lemons'].sort();
+
+      // ['apples', 'lemons', 'oranges']
+
+      /* Note that Upper Case will be treated first */
+
+      ['oranges', 'apples', 'Lemons'].sort();
+
+      // ['Lemons', 'apples', 'oranges']
+
+
+
+  h3 Create your own sorting function
+
+  p You can pass a callback as argument to 
+    code Array.sort
+    |   to apply your own sorting function.
+
+  h3 The a and b arguments
+
+  pre.language-javascript
+    code.language-javascript.
+
+      var arr = [ 2, 8, 5, 44, 23 ];
+
+      /* An example to understand how arguments are passed */
+
+      arr.sort(function (a, b) {
+        console.log(a, b);
+      });
+
+      /*
+        2 8
+        8 5
+        5 44
+        44 23
+      */
+
+
+
+  p As you can see each items of the array is passed with the one next to it, except the last item which is the only one that does not get repeated twice in the list above.
+
+  h3 The return logics
+
+  p Your callback shall return a number which shall comply with these rules:
+
+  ul
+    li
+      b If less than zero 
+      span than 
+        code a
+        |   should be ordered before 
+        code b
+
+    li
+      b If equals to zero 
+      span than the order should not change
+
+    li
+      b If greater than zero 
+      span than 
+        code b
+        |   should be ordered before 
+        code a
+
+  pre.language-javascript
+    code.language-javascript.
+
+      var users = [
+        {
+          name: 'John'
+        },
+        {
+          name: 'Jennifer'
+        },
+        {
+          name: 'Mary'
+        }
+      ];
+
+      // We want to sort our users by their names
+
+      users.sort(function (a, b) {
+        if (a.name > b.name) {
+          return 1;
+        }
+        
+        if (a.name < b.name) {
+          return -1;
+        }
+        
+        return 0;
+      });
+
+      // [ { name: 'Jennifer' }, { name: 'John' }, { name: 'Mary' } ]
+
+
+
+
+
+
+  h2 Array.reduce
+
+  p
+    code Array.reduce
+    |   is the most akward of them all. It does not reduce an array - you would use 
+    code Array.filter
+    |   for that. Instead it allows you to walk an array and generate a return value of any type from that array. The first argument is the value you want to generate and the rest of the arguments are the same then in a map callback (item, key, array).
+
+  pre.language-javascript
+    code.language-javascript.
+
+
+      var users = [
+        {
+          name: 'Kelly',
+          gender: 'girl',
+          score: 738273,
+          team: 'USA'
+        },
+
+        {
+          name: 'Mary',
+          gender: 'girl',
+          score: 8273,
+          team: 'USA'
+        },
+
+        {
+          name: 'Erika',
+          gender: 'girl',
+          score: 922002,
+          team: 'Spain'
+        },
+
+        {
+          name: 'Lucia',
+          gender: 'girl',
+          score: 5222,
+          team: 'Spain'
+        },
+
+        {
+          name: 'Juan',
+          gender: 'boy',
+          score: 9547,
+          team: 'Spain'
+        }
+      ];
+
+      /* Now let's imagine we want to retrieve the following information:
+
+        - the number of girls in each team
+        - the sum of the score of all the grils for each team
+
+        First we need to think how our result will look like:
+
+        {
+          team-name: {
+            girls: number of girls in this team,
+            score: the sum of the score from all the girls in this team
+          }
+        }
+
+      */
+
+      users.reduce(
+        // first argument is the callback function
+        function (result, user) {
+
+          // if user is a girl 
+          if ( user.gender === 'girl' ) {
+
+            // if this user's team is not yet in our object
+            // we add it
+            if ( ! user.team in result ) {
+              result[user.team] = {
+                girls: 0,
+                score: 0
+              };
+            }
+
+            // we add 1 to the number of girls
+            result[user.team].girls ++;
+
+            // we add this user's score to the team scroe
+            result[user.team].score += user.score;
+          }
+
+          // VERY IMPORTANT! We need to return the result so it can
+          // be used as the first argument in the next item
+          return result;
+        },
+
+        // second argument is the starting state of the result value
+        // here we give it an empty object because we want to return an object
+        {});
+
+      // { USA: { girls: 2, score: 746546 , Spain: { girls: 2, score: 927224 } }
+
+
+
+
+
+  hr

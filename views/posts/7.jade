@@ -1,0 +1,113 @@
+extends ../layouts/post
+
+block post
+  p
+    a(href='http://www.php.net//manual/en/class.closure.php' target='_blank') Closures
+    |  in PHP are:
+
+  ul
+    li NOT functions but look like it
+    li sometimes called 
+      a(href='http://www.php.net/manual/en/functions.anonymous.php' target='_blank') anonymous functions
+      |   but are not functions
+    li instances of the Closure class that are 
+      a(href='http://www.php.net/manual/en/language.oop5.magic.php#language.oop5.magic.invoke' target='_blank') invoked
+    li part of the PHP pseudo-types 
+      a(href='http://www.php.net/manual/en/language.types.callable.php' target='_blank') callable
+
+  p This is for the technical aspect. Now let's get our hands greasy and see how we can use them.
+
+  pre.language-php
+    code.language-php.
+
+      $array = [1, 2, 3];
+
+      // Using callback function by calling its name
+
+      function printArray ($number) {
+        var_dump($number);
+      }
+
+      array_walk($array, 'printArray');
+
+      // Using closures
+
+      array_walk($array, function ($number) {
+        var_dump($number);
+      });
+
+
+
+
+  p As you can see, closures allow us to directly insert an anonymous function as our callback instead of defining one first. This presents the advantage of not polluting our scope because the scope of our closure gets garbaged after it is being used -- when our 
+    code printArray
+    |   function stays in the memory. Closures are efficient way of coding in PHP.
+
+
+  h2 The use function
+
+  p As you probably know, functions in PHP have an isolated scope - meaning they do not inherit variables from the scope they are declared from, and their scope does not get injected into their parent scope:
+
+  pre.language-php
+    code.language-php.
+
+      $myVar = 1;
+
+      function myFunction () {
+        isset($myVar); // false, $myVar is undefined here
+
+        $myOtherVar = 2;
+      }
+
+      myFunction();
+
+      isset($myOtherVar); // false, $myOtherVar was only defined within the function
+
+
+
+
+  p This goes the same with closures. If you want a closure to be aware of a variable that have been defined outside it, you can use the 
+    code use
+    |   construct.
+
+
+  pre.language-php
+    code.language-php.
+
+      $myVar = 1;
+      
+      array_walk($numbers, function ($numbers) use ($myVar) {
+        isset($myVar); // true, because we have injected it into our closure scope using use
+      });
+
+      // Note that you can attach more than one variable: use($var1, $var2, $var3)
+
+
+  h2 Use case
+
+  p Next is a practical use of closures. We use them to filter an array of persons to retain only the persons who are 21 years old or more.
+
+
+  pre.language-php
+    code.language-php.
+
+      $persons = [
+        (object) [ 'date-of-birth' => new \DateTime('1971-01-01') ],
+        (object) [ 'date-of-birth' => new \DateTime('1982-02-02') ],
+        (object) [ 'date-of-birth' => new \DateTime('1993-03-03') ],
+        (object) [ 'date-of-birth' => new \DateTime('2004-04-04') ]
+      ];
+
+
+      $now = new \DateTime('now');
+
+      $drinkingAge = array_filter($persons,
+        function ($person) use ($now) {
+          return ( $person->{ 'date-of-birth' }->diff($now)->y >= 21 );
+        });
+
+      var_dump($drinkingAge);
+
+
+
+  hr

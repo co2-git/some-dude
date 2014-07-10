@@ -1,0 +1,78 @@
+extends ../layouts/post
+
+block post
+  p 
+    a(href='http://en.wikipedia.org/wiki/MapReduce' target='_blank') MapReduce
+    |  is a way of retrieving data parallely - this means at the same time and from different locations. We'll see how to use that powerful search tool with 
+    a(href='http://docs.mongodb.org/manual/core/map-reduce/' target='_blank') MongoDB.
+
+  p MapReduce in MongoDB is done in 3 steps:
+
+  ol
+    li Map
+    li Reduce
+    li Out
+
+  p We will use the following collection, 
+    code players
+    | , to illustrate:
+
+  pre.language-javascript
+    code.language-javascript.
+
+      db.players.insert([
+        { "player": "Messi", "Team": "FC Barca" },
+        { "player": "Ronaldo", "Team": "Real Madrid" },
+        { "player": "Neymar", "Team": "FC Barca" }
+      ]);
+
+
+
+
+  h2 Mapping
+
+  p Mapping consists in taking elements from one array, transforming them if need be, and writing the results in another array. In MongoDB, arrays are called 
+    code collections
+    |   and items 
+    code documents
+    | . This is what a 
+    code map
+    |   function looks like:
+
+  pre.language-javascript
+    code.language-javascript.
+      
+      function map () {
+        emit();
+      }
+
+
+
+
+  p In MongoDB, 
+    code emit
+    |   is the process of moving the item to group B. The item will be refered as 
+    code this
+    | . 
+    code emit
+    |   is waiting for as many arguments as there are fields in the document it will emit.
+    
+
+
+  pre.language-javascript
+    code.language-javascript.
+      
+      // Here, we just move items from group A to group B without changing them
+      function map () {
+        emit(this.player, this.team);
+      }
+
+      // Here, we just move items from group A to group B and we changing them,
+      // by keeping only 
+      function map () {
+        emit(this.player, this.team);
+      }
+
+
+
+  hr
