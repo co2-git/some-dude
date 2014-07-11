@@ -1,5 +1,9 @@
 #! /usr/bin/env node
 
+/*  
+|   CEREMONY
+*/  ////////////////
+
 var $ = require;
 
 if ( ! process.send ) {
@@ -78,7 +82,7 @@ domain.run(function () {
     
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
-  app.get('/', $('./routes/home').bind({ app: app }));
+  app.get('/', $('./routes/blog').bind({ app: app }));
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
 

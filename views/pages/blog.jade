@@ -10,25 +10,10 @@ include ../mixins/show-post
 //- ---------------------
 block page
   .row
-    .columns.small-12
-
-      //
-        h1 Blog
-
-        hr
-
-        form(method='post' action='/blog/search' name='search-blog')
-          input(type='search' role='search' placeholder='Search blog...' required name='search'
-            value=(keyword || '') autofocus)
-
-          .row.collapse
-            .columns.small-12
-              button.expand.radius(type='submit')
-                i.fa.fa-search
-                span  Search
+    .columns.small-12.medium-8
 
       mixin show-post-two-by-two (post)
-        .columns.small-12.medium-6
+        .columns.small-12
           +show-post(post, 'preview')
 
       - var i = 0
@@ -40,3 +25,25 @@ block page
           +show-post-two-by-two(post)
 
         - i ++
+
+    .columns.small-12.medium-4
+      form(name='search')
+        input(type='search' placeholder='Search' autofocus)
+
+        button.expand.radius Search
+
+        .row
+          .columns.small-12
+
+            h2 
+              i.fa
+              |  Language 
+              a(href) all
+              span  
+              a(href) none
+
+        .row
+          .columns.small-12
+
+            each language in languages
+              button.round.secondary.language.tiny(type='button')=language

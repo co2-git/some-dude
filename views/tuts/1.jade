@@ -15,58 +15,63 @@ block tut
     li Grid
     li ...
 
-  p In this tut, let's see how to use Foundation in a project using:
+  h2 Install with bower
+
+  p You can use bower to install foundation. Just type:
+
+  pre.language-bash
+    code.language-bash.
+
+      bower install foundation
+      ls bower_components/foundation
+      # css/ js/ scss/ bower.json
+
+
+
+  a(href) How to use bower?
+
+  h2 Do not use default files
+
+  p You 
+    strong SHOULD NOT 
+    |  import  
+    code css/foundation.css
+    |  nor the 
+    code js/foundation.js
+    |  files. 
+    | These files contain ALL the components from the Foundation framework.
+
+  p It is very unlikely that your app needs all the components. Instead, you
+    |  should build only the components you need.
+
+
+  h2 Build SASS with node-sass
+
+  p Create a folder called 
+    code scss/
+    |   in the same directory where the folder 
+    code bower_components
+    |   is.
+
+  p In the folder 
+    code scss/
+    |   , create the file 
+    code scss/main.scss
+    |   and open it with your favorite code editor.
+
+  p We will first set the character encoding to utf-8:
+
+  pre.language-scss
+    code.language-scss.
+
+      @charset "UTF-8";
+
+
+
+  p Then I will import the Foundation components I want. I can find the list of
+    |   these components in 
+    code bower_components/foundation/scss
+    |   .  Let's say we want to use only these files:
 
   ul
-    li NodeJS
-    li Express + Jade
-    li Bower
-
-  p For this tut, we assume that:
-
-  ul
-    li You have NodeJS and NPM installed
-
-  p Let's create a new folder for our app
-
-  pre.language-bash
-    code.language-bash.
-
-      mkdir ~/proj
-
-      cd ~/proj
-
-
-
-  p We create the package.json file
-
-  pre.language-bash
-    code.language-bash.
-
-      npm init
-
-
-
-  p Install express + express plugins
-
-  pre.language-bash
-    code.language-bash.
-
-      npm install express jade --save
-
-
-
-  p Install bower if you don't have it yet
-
-  pre.language-bash
-    code.language-bash.
-
-      npm install bower --save --global
-
-      # test
-      bower
-
-
-
-  p
-
+    li

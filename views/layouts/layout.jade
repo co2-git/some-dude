@@ -35,6 +35,29 @@ block document
 
   //- Banner
   header(role='banner')
+    //- Top Bar
+    .row.collapse
+      .columns.small-12
+        div.sticky
+          nav.top-bar(data-topbar)
+            ul.title-area
+              li.name
+                h1
+                  a(href='/')
+                    img(src='/cdn/images/face.png' style='width:32px; margin: 0 12px;')
+                    span some dude's blog
+
+
+              li.toggle-topbar
+                a.reveal-search(href='#')
+                  i.fa.fa-search
+
+            section.top-bar-section
+              ul.right
+                li
+                  a(href='#')
+                    i.fa.fa-comment
+  //
     .row
       .columns.small-12
 

@@ -31,4 +31,20 @@
       $('[name=languages]').val(languages.join(','));
     });
   }
+
+  $('.reveal-search').on('click', function (e) {
+    // $('form[name=search]').css('margin-top', $(window).scrollTop());
+    $(window).scrollTop($('form[name=search]').offset().top);
+
+    $('form[name=search] [type=search]').focus();
+
+    e.stopPropagation();
+    return false;
+  });
+
+  $(window).on('scroll', function () {
+    if ( +$(window).width() > 640 ) {
+      $('form[name=search]').css('margin-top', $(window).scrollTop());
+    }
+  });
 })();
