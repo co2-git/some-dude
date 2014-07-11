@@ -16,7 +16,6 @@
 
 $defaultColor: #2D6699;
 
-
 /*  *********************************************
     TYPOGRAPHY
     ********************************************* */
@@ -34,6 +33,11 @@ $defaultColor: #2D6699;
     **************************************** */
   h2 {
     font-size: rem-calc(32)
+  }
+
+  .button.tiny {
+    font-size: rem-calc(14);
+    margin-bottom: rem-calc(8)
   }
 
   /* INPUT
@@ -83,6 +87,13 @@ $defaultColor: #2D6699;
     tbody tr:nth-child(even) td {
       background: #eee
     }
+  }
+
+  // GRID
+
+  .row {
+    // border: 1px solid red;
+    margin-bottom: 22px !important;
   }
 
   /* MAIN */
@@ -202,15 +213,17 @@ $defaultColor: #2D6699;
   // border: 4px solid #ccc;
   border-radius: 8px;
   padding-top: 22px;
+  // border-top: 1px solid #ccc;
+  // border-bottom: 3px solid #eee;
 
   & + .post {
     border-top: none
   }
 
-  .panel {
-    margin-left: -15px;
-    margin-right: -15px;
-  }
+  // .panel {
+  //   margin-left: -15px;
+  //   margin-right: -15px;
+  // }
 
   &:nth-child(even) {
     background: #eee
@@ -224,5 +237,19 @@ $defaultColor: #2D6699;
 .post-page {
   h1 {
     font-size: rem-calc(36);
+  }
+}
+
+/*  *********************************************
+    TUT PAGE
+    ********************************************* */
+
+.tut-page {
+  h1 {
+    font-size: rem-calc(36);
+  }
+
+  p, ul {
+    font-size: rem-calc(18)
   }
 }

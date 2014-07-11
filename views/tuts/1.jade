@@ -1,0 +1,72 @@
+extends ../layouts/tut
+
+block tut
+  p Zurb Foundation is a UI front-end framework, like Bootstrap.
+
+  h2 Features
+
+  ul
+    li Written with SASS
+    li Free + Open Source
+    li Installable via Bower
+    li Light + Modular / Customizable
+    li Use jQuery
+    li Responsive design
+    li Grid
+    li ...
+
+  p In this tut, let's see how to use Foundation in a project using:
+
+  ul
+    li NodeJS
+    li Express + Jade
+    li Bower
+
+  p For this tut, we assume that:
+
+  ul
+    li You have NodeJS and NPM installed
+
+  p Let's create a new folder for our app
+
+  pre.language-bash
+    code.language-bash.
+
+      mkdir ~/proj
+
+      cd ~/proj
+
+
+
+  p We create the package.json file
+
+  pre.language-bash
+    code.language-bash.
+
+      npm init
+
+
+
+  p Install express + express plugins
+
+  pre.language-bash
+    code.language-bash.
+
+      npm install express jade --save
+
+
+
+  p Install bower if you don't have it yet
+
+  pre.language-bash
+    code.language-bash.
+
+      npm install bower --save --global
+
+      # test
+      bower
+
+
+
+  p
+

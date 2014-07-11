@@ -1,18 +1,26 @@
 extends ../layouts/layout
 
 block page
-  .row
-    .columns.small-12
-      p.panel.callout
-        i.fa.fa-life-bouy
-        big Click a button to include it in / exclude if from the search.
+  form(name='advanced-search' method='POST')
+    .row
+      .columns.small-12
 
-      form(name='advanced-search' method='POST')
+        p.panel.callout
+          i.fa.fa-life-bouy
+          big Click a button to include it in / exclude if from the search.
 
-        h2 Type 
+    .row
+      .columns.small-12
+
+        h2 
+          i.fa
+          |  Type 
           a(href) all
           span  
           a(href) none
+
+    .row
+      .columns.small-12
 
         button.round.type(type='button')
           i.fa.fa-flask
@@ -22,25 +30,45 @@ block page
           i.fa.fa-code
           span  Blog
 
-        h2 Language 
+    .row
+      .columns.small-12
+
+        h2 
+          i.fa
+          |  Language 
           a(href) all
           span  
           a(href) none
+
+    .row
+      .columns.small-12
 
         each language in languages
           button.round.secondary.language(type='button')=language
 
-        h2 Tags 
+    .row
+      .columns.small-12
+
+        h2 
+          i.fa
+          |  Tags 
           a(href) all
           span  
           a(href) none
 
+    .row
+      .columns.small-12
+
         input(type='text' placeholder='Filter tags')
+
+    .row
+      .columns.small-12
 
         each tag in tags
           button.round.secondary.tag(type='button')=tag
 
-        hr
+    .row
+      .columns.small-12
 
         button.radius.expand.large Search
 

@@ -1,0 +1,30 @@
+extends layout
+
+block page
+  .row.tut-page
+    .columns.small-12
+      
+      h1=tut.title
+
+      .panel.radius.callout
+        big=tut.blurb
+
+      block tut
+
+      hr
+
+      p.text-center
+
+        button.small Languages
+
+        each language in tut.languages
+          a.button.secondary.small(href='/blog/search/language/' + language.key)=language.key
+          span 
+
+      p.text-center
+
+        button.small Tags
+
+        each tag in tut.tags
+          a.button.secondary.small(href='/blog/search/tag/' + tag.key)=tag.key
+          span

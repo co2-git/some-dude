@@ -2,7 +2,8 @@ extends ../layouts/layout
 
 block page
   .row
-    .columns.small-12
-      h1 Page not found
+    .columns.small-12.text-center
 
-      p We are sorry. The page you are looking for was not found on this server.
+      h1=(disclaimer || 'Page not found')
+
+      p.panel.callout=(text || 'We are sorry. The page you are looking for was not found on this server.')

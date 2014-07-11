@@ -114,7 +114,15 @@ domain.run(function () {
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
 
-        BLOG SEARCH
+        TUTS
+    
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
+
+  app.get('/tuts', $('./routes/tuts').bind({ app: app }));
+
+  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
+
+        SEARCH FORM
     
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
@@ -122,7 +130,7 @@ domain.run(function () {
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
 
-        BLOG SEARCH - ADVANCED OPTIONS
+        SEARCH PAGE
     
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
@@ -136,6 +144,15 @@ domain.run(function () {
 
   app.get('/blog/:post_id/:post_slug', $('./routes/post').bind({ app: app }));
   app.get('/blog/:post_id', $('./routes/post').bind({ app: app }));
+
+  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
+
+        TUT
+    
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
+
+  app.get('/tuts/:tut_id/:tut_slug', $('./routes/tut').bind({ app: app }));
+  app.get('/tuts/:tut_id', $('./routes/tut').bind({ app: app }));
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
 
