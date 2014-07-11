@@ -104,7 +104,7 @@ body {
 
   /* MAIN */
 
-  padding-top: 22px;
+  padding-top: 62px;
 
 }
 
@@ -128,6 +128,30 @@ body {
       }
     }
   }
+}
+
+.my-top-bar {
+  // background: rgba(51, 51, 51, .85);
+  @include linear-gradient(rgba(51, 51, 51, .8), rgba(71, 71, 71, .7));
+  padding: 6px;
+
+  a {
+    color: #eee;
+  }
+
+  img {
+    border-radius: 100px 50px 100px 5px
+  }
+
+  i {
+    margin: 6px
+  }
+
+  position: fixed;
+  width: 100%;
+  right: 0;
+  left: 0;
+  z-index: 9999
 }
 
 /*  *********************************************

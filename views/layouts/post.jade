@@ -1,8 +1,11 @@
 extends layout
 
+include ../mixins/show-search
+
 block page
+
   .row.post-page
-    .columns.small-12
+    .columns.small-12.medium-8
       
       h1=post.title
 
@@ -11,22 +14,27 @@ block page
 
       block post
 
-      p.text-right
+    .columns.small-12.medium-4
+      .row
+        .columns.small-12
+          +show-search()
 
-        span.label.round Languages
-
-        span  
+      //
+        .row
+          .columns.small-12
+            h4 View posts with the same language
 
         each language in post.languages
-          a.button.secondary.small(href='/blog/search/language/' + language.key)=language.key
-          span 
-
-        span  
-
-        span.label.round Tags
-
-        span  
-
-        each tag in post.tags
-          a.button.secondary.small(href='/blog/search/tag/' + tag.key)=tag.key
+          a.button.secondary.small.columns.small-12.medium-6(href='/blog/search/language/' + language.key)=language.key
           span
+
+      .row
+        .columns.small-12
+          h4 View posts with the same tags
+
+      each tag in post.tags
+        a.button.secondary.small.columns.small-12.medium-6(href='/blog/search/tag/' + tag.key)=tag.key
+        span
+
+      .row
+        .columns.small-12

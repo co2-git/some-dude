@@ -5,8 +5,9 @@ extends ../layouts/layout
 //- *** MIXINS ***
 //- ---------------------
 include ../mixins/show-post
+include ../mixins/show-search
 
-//- *** PAGE ***
+//- *** MAIN ***
 //- ---------------------
 block page
   .row
@@ -27,23 +28,4 @@ block page
         - i ++
 
     .columns.small-12.medium-4
-      form(name='search')
-        input(type='search' placeholder='Search' autofocus)
-
-        button.expand.radius Search
-
-        .row
-          .columns.small-12
-
-            h2 
-              i.fa
-              |  Language 
-              a(href) all
-              span  
-              a(href) none
-
-        .row
-          .columns.small-12
-
-            each language in languages
-              button.round.secondary.language.tiny(type='button')=language
+      +show-search()

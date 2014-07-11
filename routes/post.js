@@ -1,5 +1,3 @@
-/* Express middleware to display a post */
-
 var $ = require;
 
 module.exports = function (req, res, next) {
@@ -15,16 +13,65 @@ module.exports = function (req, res, next) {
   });
 
   domain.run(function () {
-    $('../lib/blog').find({ id: +req.params.post_id }, domain.intercept(function (posts) {
-      if ( ! posts.length ) {
-        return res.redirect('/404');
-      }
-      res.render('posts/' + req.params.post_id, {
-        post: posts[0],
-        page: 'blog',
-        title: posts[0].title,
-        description: posts[0].blurb
-      });
+    $('../lib/connect')(domain.intercept(function (db) {
+
+      $('async').parallel(
+        {
+          post: function (cb) {
+            db.collection('blog').findOne({ id: +req.params.post_id}, cb);
+          },
+
+          languages: function (cb) {
+            db.collection('blog').find({},
+              {
+                _id: 0, id: 0, title: 0, slug: 0, blurb: 0, tags: 0
+              })
+              .toArray(domain.intercept(function (posts) {
+                var lang = [];
+
+                posts.forEach(function (post) {
+                  post.languages.forEach(function (language) {
+                    if ( lang.indexOf(language.key) === -1 ) {
+                      lang.push(language.key);
+                    }
+                  });
+                });
+                
+                cb(null, lang.sort());
+              }));
+          },
+
+          tags: function (cb) {
+            db.collection('blog').find({},
+              {
+                _id: 0, id: 0, title: 0, slug: 0, blurb: 0, languages: 0
+              })
+              .toArray(domain.intercept(function (posts) {
+                var tags = [];
+
+                posts.forEach(function (post) {
+                  post.tags.forEach(function (tag) {
+                    if ( tags.indexOf(tag.key) === -1 ) {
+                      tags.push(tag.key);
+                    }
+                  });
+                });
+                
+                cb(null, tags.sort());
+              }));
+          }
+        },
+
+
+        domain.intercept(function (results) {
+          res.render('posts/' + req.params.post_id, {
+            page: 'post',
+            languages: results.languages,
+            tags: results.tags,
+            post: results.post
+          });
+        }));
+
     }));
   });
 };

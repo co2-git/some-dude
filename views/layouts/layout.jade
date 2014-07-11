@@ -35,55 +35,27 @@ block document
 
   //- Banner
   header(role='banner')
-    //- Top Bar
-    .row.collapse
-      .columns.small-12
-        div.sticky
-          nav.top-bar(data-topbar)
-            ul.title-area
-              li.name
-                h1
-                  a(href='/')
-                    img(src='/cdn/images/face.png' style='width:32px; margin: 0 12px;')
-                    span some dude's blog
-
-
-              li.toggle-topbar
-                a.reveal-search(href='#')
-                  i.fa.fa-search
-
-            section.top-bar-section
-              ul.right
-                li
-                  a(href='#')
-                    i.fa.fa-comment
-  //
-    .row
-      .columns.small-12
-
-        h1.text-center
-          a(href='/') some dude's website  
-
-    .row
-      .columns.small-12
-        nav(role='menubar')
-          ul.small-block-grid-3
-            li(class=( page === 'tuts' ? 'active' : ''))
-              a.button.expand.secondary(href='/tuts')
-                i.fa.fa-flask
-                span  tuts
-            li(class=( page === 'blog' ? 'active' : ''))
-              a.button.expand.secondary(href='/blog')
-                i.fa.fa-code
-                span  blog
-            li(class=( page === 'search' ? 'active' : ''))
-              a.button.expand.secondary(href='/search')
-                i.fa.fa-search
-                span  search
+    .row.collapse.my-top-bar
+      .columns.small-9
+        a(href='/')
+          img(src='/cdn/images/face.png' style='width:32px; margin: 0 12px;')
+          span some dude's blog
+      .columns.small-3.text-right
+        a.reveal-search(href='#')
+          i.fa.fa-search
+        - if ( page === 'post' )
+          a(href)
+            i.fa.fa-comment
 
   //- Page
   section(role='main')
     block page
+    //
+      .row
+        .columns.small-12.medium-8
+          block main
+        .columns.small-12.medium-4
+          block aside
 
   ///- Footer
   footer(role='contentinfo')
@@ -93,6 +65,8 @@ block document
         span=pkg.name 
         span  v
         span=pkg.version
+        span  
+        a(href='https://github.com/co2-git/some-dude' target='_blank') View on GitHub
 
   //- Scripts
   block scripts
