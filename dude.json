@@ -26,6 +26,12 @@
           "public/bower_components/foundation/js/foundation/foundation.topbar.js"
         ],
         "dest": "public/cdn/js/foundation.min.js"
+      },
+      {
+        "source": [
+          "public/cdn/js/app.js"
+        ],
+        "dest": "public/cdn/js/app.min.js"
       }
     ]
   },
