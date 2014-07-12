@@ -77,7 +77,10 @@ domain.run(function () {
 
   /* cache */
   app.use(function (req, res, next) {
-    res.set({ 'Cache-Control': 'max-age=172800' });
+    if ( req.path.match(/^\/cdn\//) ) {
+      res.set({ 'Cache-Control': 'max-age=172800' });
+      res.set({ 'Expires': 'Mon, 29 Nov 2014 21:44:55 GMT' });
+    }
     next();
   });
 

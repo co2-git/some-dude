@@ -24,7 +24,6 @@ body {
     TYPOGRAPHY
     ********************************************* */
 
-
 [role=main] {
   /* H1
     **************************************** */
@@ -67,32 +66,6 @@ body {
     font-size: rem-calc(22);
   }
 
-  /* TABLE
-    **************************************** */
-  table {
-    width: 100%;
-
-    thead td, thead th {
-      background: #666;
-      color: #eee;
-      padding: 6px;
-      border: 1px solid #999
-    }
-
-    tbody td, tbody th {
-      padding: 6px;
-      border: 1px solid #999
-    }
-
-    tbody th {
-      background: #ccc
-    }
-
-    tbody tr:nth-child(even) td {
-      background: #eee
-    }
-  }
-
   // GRID
 
   .row {
@@ -114,21 +87,6 @@ body {
   }
 }
 
-.top-bar {
-  ul.title-area {
-    li.name {
-      h1 {
-        img {
-          border-radius: 50px;
-
-          @media (max-width: 420px) {
-            margin-left: -10px !important
-          }
-        }
-      }
-    }
-  }
-}
 
 .my-top-bar {
   // background: rgba(51, 51, 51, .85);
@@ -160,97 +118,10 @@ body {
 
 [role='banner'] {
   @include linear-gradient(#25425C, #6685A1);
-
-  h1 {
-    color: #ccc;
-    text-shadow: #000 0 1px;
-
-    a {
-      color: #ccc
-    }
-
-    small {
-      color: #aaa;
-
-      @media (max-width: 480px) {
-        display: block;
-        padding: 20px 0;
-        color: #ccc
-      }
-    }
-  }
-
-  [role='menubar'] {
-    li {
-      background: #fff;
-      padding: 0;
-
-      .button {
-        font-size: rem-calc(20);
-
-        i {
-          color: #2D6699
-        }
-      }
-
-      &.active {
-        // @include linear-gradient(#A8B5C8, #444975, right);
-        background: #666;
-
-        .button {
-          background: #ccc;
-
-          &:hover{
-            background: #bbb
-          }
-        }
-      }
-    }
-  }
 }
 
   
 
-/*  *********************************************
-    PROJECT
-    ********************************************* */
-
-.project {
-  background: #ccc;
-  padding: 8px;
-  border-radius: 4px;
-  margin: 10px;
-  border: 6px solid #555;
-
-  h4 {
-    background: #666;
-    color: #eee;
-    border-radius: 4px;
-    padding: 8px;
-    // border: 1px solid #555;
-    text-shadow: #000 0 1px;
-
-    strong {
-      background: #333;
-      border-radius: 4px;
-      padding: 4px;
-    }
-
-    small {
-      color: #ddd;
-      text-shadow: none;
-    }
-  }
-
-  img {
-    border-radius: 6px;
-    border: 6px solid #aaa;
-  }
-
-  .button.alert {
-    margin-top: 12px
-  }
-}
 
 /*  *********************************************
     POST PREVIEW
@@ -286,19 +157,3 @@ body {
     font-size: rem-calc(36);
   }
 }
-
-/*  *********************************************
-    TUT PAGE
-    ********************************************* */
-
-.tut-page {
-  h1 {
-    font-size: rem-calc(36);
-  }
-
-  p, ul {
-    font-size: rem-calc(18)
-  }
-}
-
-
