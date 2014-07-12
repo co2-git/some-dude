@@ -5,7 +5,7 @@ include ../mixins/show-search
 block page
 
   .row.post-page
-    .columns.small-12.medium-8
+    .columns.small-12.medium-8.main
       
       h1=post.title
 
@@ -14,7 +14,7 @@ block page
 
       block post
 
-    .columns.small-12.medium-4
+    aside.columns.small-12.medium-4
       .row
         .columns.small-12
           +show-search()
@@ -26,5 +26,5 @@ block page
             |   Tags
 
       each tag in post.tags
-        a.button.secondary.small.columns.small-12.large-6(href='/blog/search/tag/' + tag.key)=tag.key
+        a.button.secondary.small.columns.small-12.large-6(href='/search/tag/' + tag.key)=tag.key
         span  

@@ -1,6 +1,6 @@
 mixin show-search ()
-  form(name='search')
-    input(type='search' placeholder='Search' autofocus)
+  form(name='search' method='POST' action='/search')
+    input(type='search' placeholder='Search' autofocus name='search' value=( search || ''))
 
     button.expand.radius
       i.fa.fa-search

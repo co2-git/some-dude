@@ -4,6 +4,8 @@ module.exports = function (req, res, next) {
   if ( res.error ) {
     return next();
   }
+
+  var route = this;
   
   var domain = $('domain').create();
 
@@ -13,12 +15,26 @@ module.exports = function (req, res, next) {
   });
 
   domain.run(function () {
+    var options = {};
+
+    if ( req.body.search ) {
+      options = { tags: { $elemMatch: { key: { $in: req.body.search.split(/\s+/) } } } };
+    }
+
+    if ( req.params.language ) {
+      options = { languages: { $elemMatch: { key: req.params.language } } };
+    }
+
+    if ( req.params.tag ) {
+      options = { tags: { $elemMatch: { key: req.params.tag } } };
+    }
+
     $('../lib/connect')(domain.intercept(function (db) {
 
       $('async').parallel(
         {
           posts: function (cb) {
-            db.collection('blog').find({})
+            db.collection('blog').find(options)
               .sort({ 'time.posted': -1 })
               .limit(25)
               .toArray(cb);
@@ -71,7 +87,8 @@ module.exports = function (req, res, next) {
             page: 'blog',
             languages: results.languages,
             tags: results.tags,
-            posts: results.posts
+            posts: results.posts,
+            search: req.body.search
           });
         }));
 

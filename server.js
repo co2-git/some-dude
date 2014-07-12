@@ -75,6 +75,12 @@ domain.run(function () {
 
   app.use($('compression')());
 
+  /* cache */
+  app.use(function (req, res, next) {
+    res.set({ 'Cache-Control': 'max-age=172800' });
+    next();
+  });
+
   /* Favicon */
   app.use($('serve-favicon')($('path').join(__dirname, 'public', 'cdn', 'images', 'face.png')));
 
@@ -132,7 +138,7 @@ domain.run(function () {
     
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
-  app.post('/search', $('./routes/search').post.bind({ app: app }));
+  app.post('/search', $('./routes/blog').bind({ app: app }));
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
 
@@ -174,7 +180,7 @@ domain.run(function () {
     
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
-  app.get('/blog/search/tag/:tag', $('./routes/search-post-by-tag').bind({ app: app }));
+  app.get('/search/tag/:tag', $('./routes/search-post-by-tag').bind({ app: app }));
 
   app.use(express.static($('path').join(__dirname, 'public')));
 

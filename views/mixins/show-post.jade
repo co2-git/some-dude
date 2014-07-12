@@ -11,7 +11,7 @@ mixin show-post(post, view)
     .row.post
       .columns.small-12.text-center
         each language in post.languages
-          a.button.tiny.success.round(href='/blog/search/language/' + language.key)
+          a.button.tiny.success.round(href='/search/language/' + language.key)
             span=language.key
           span  
           
@@ -29,21 +29,8 @@ mixin show-post(post, view)
           big=post.blurb
 
         p.text-center
-          //
-            span.label.round Languages
-
-            span  
-
-            each language in post.languages
-              a.label.secondary.round(href='/blog/search/language/' + language.key)=language.key
-              span 
-
-            span  
-
-            span.label.round Tags
-
           span  
 
           each tag in post.tags
-            a.button.tiny.secondary.round(href='/blog/search/tag/' + tag.key)=tag.key
+            a.button.tiny.secondary.round(href='/search/tag/' + tag.key)=tag.key
             span  
