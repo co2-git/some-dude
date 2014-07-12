@@ -26,7 +26,15 @@
     else {
       $('form[name=search]').animate({'margin-top': ($(window).scrollTop() + 45)}, 'slow',
         function () {
-          $('form[name=search] [type=search]').focus();
+          if ( ! $(window).scrollTop() ) {
+            $('form[name=search]').animate({'margin-top': 0}, 'slow',
+              function () {
+                $('form[name=search] [type=search]').focus();
+              });
+          }
+          else  {
+            $('form[name=search] [type=search]').focus();
+          }
         });
     }
 

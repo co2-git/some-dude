@@ -19,8 +19,23 @@ module.exports = function (req, res, next) {
     var cached = route.app.locals.cache.pages.home &&
       route.app.locals.cache.pages.home[0];
 
+    if ( req.body.search ) {
+      cached = route.app.locals.cache.pages.search &&
+        route.app.locals.cache.pages.search[req.body.search];
+    }
+
+    if ( req.params.language ) {
+      cached = route.app.locals.cache.pages.language_search &&
+        route.app.locals.cache.pages.language_search[req.params.language];
+    }
+
+    if ( req.params.tag ) {
+      cached = route.app.locals.cache.pages.tag_search &&
+        route.app.locals.cache.pages.tag_search[req.params.tag];
+    }
+
     if ( cached ) {
-      return res.send(cached.html);
+      return res.send(cached.html + '<!-- cached -->');
     }
 
     var options = {};
@@ -94,11 +109,33 @@ module.exports = function (req, res, next) {
                 route.app.locals.cache.pages.home = [];
               }
 
-              route.app.locals.cache.pages.home[0] = {
-                html: html,
-                name: 'home',
-                cached: +new Date()
-              };
+              if ( req.body.search ) {
+                route.app.locals.cache.pages.search[req.body.search] = {
+                  html: html,
+                  cached: +new Date()
+                };
+              }
+
+              else if ( req.params.language ) {
+                route.app.locals.cache.pages.language_search[req.params.language] = {
+                  html: html,
+                  cached: +new Date()
+                };
+              }
+
+              else if ( req.params.tag ) {
+                route.app.locals.cache.pages.tag_search[req.params.tag] = {
+                  html: html,
+                  cached: +new Date()
+                };
+              }
+
+              else {
+                route.app.locals.cache.pages.home[0] = {
+                  html: html,
+                  cached: +new Date()
+                };
+              }
 
               res.send(html);
             }));
