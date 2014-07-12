@@ -30,7 +30,10 @@ block document
   //- Stylesheets
   block stylesheets
     link(rel='stylesheet' href='/cdn/css/francois.min.css')
-    link(rel='stylesheet' href='/bower_components/font-awesome/css/font-awesome.min.css')
+    - if ( env === 'production' )
+      link(href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css", rel="stylesheet")
+    - else
+      link(rel='stylesheet' href='/bower_components/font-awesome/css/font-awesome.min.css')
     link(rel='stylesheet' href='/vendors/LeaVerou/prism/prism.min.css')
 
   //- Banner
