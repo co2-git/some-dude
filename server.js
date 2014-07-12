@@ -30,6 +30,28 @@ domain.run(function () {
   var app         = express();
   var bodyParser  = $('body-parser');
 
+  // get languages
+
+  $('./lib/connect')(domain.intercept(function (db) {
+    db.collection('blog').find({},
+      {
+        _id: 0, id: 0, title: 0, slug: 0, blurb: 0, tags: 0
+      })
+      .toArray(domain.intercept(function (posts) {
+        var lang = [];
+
+        posts.forEach(function (post) {
+          post.languages.forEach(function (language) {
+            if ( lang.indexOf(language.key) === -1 ) {
+              lang.push(language.key);
+            }
+          });
+        });
+
+        app.locals.languages = lang.sort();
+      }));
+  }));
+
   app.set('port',           process.env.PORT || 33367);
   app.set('view engine',    'jade');
   app.set('views',          $('path').join(__dirname, 'views'));

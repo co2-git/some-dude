@@ -23,7 +23,6 @@ module.exports = function (req, res, next) {
       return res.send(cached.html);
     }
 
-
     var options = {};
 
     if ( req.body.search ) {
@@ -47,26 +46,6 @@ module.exports = function (req, res, next) {
               .sort({ 'time.posted': -1 })
               .limit(25)
               .toArray(cb);
-          },
-
-          languages: function (cb) {
-            db.collection('blog').find({},
-              {
-                _id: 0, id: 0, title: 0, slug: 0, blurb: 0, tags: 0
-              })
-              .toArray(domain.intercept(function (posts) {
-                var lang = [];
-
-                posts.forEach(function (post) {
-                  post.languages.forEach(function (language) {
-                    if ( lang.indexOf(language.key) === -1 ) {
-                      lang.push(language.key);
-                    }
-                  });
-                });
-                
-                cb(null, lang.sort());
-              }));
           },
 
           tags: function (cb) {
@@ -97,7 +76,6 @@ module.exports = function (req, res, next) {
 
           var options2 = {
             page: 'blog',
-            languages: results.languages,
             tags: results.tags,
             posts: results.posts,
             search: req.body.search

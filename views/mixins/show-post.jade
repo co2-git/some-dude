@@ -10,6 +10,8 @@ mixin show-post(post, view)
   - if ( view === 'preview' )
     .row.post
       .columns.small-12.text-center
+        // i.fa.fa-language
+        span  
         each language in post.languages
           a.button.tiny.success.round(href='/search/language/' + language.key)
             span=language.key
@@ -29,6 +31,8 @@ mixin show-post(post, view)
           big=post.blurb
 
         p.text-center
+          // i.fa.fa-tags
+
           span  
 
           each tag in post.tags

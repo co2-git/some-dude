@@ -13,19 +13,27 @@ block page
   .row
     .columns.small-12.medium-8
 
-      mixin show-post-two-by-two (post)
-        .columns.small-12
-          +show-post(post, 'preview')
+      - if ( posts.length )
+        mixin show-post-two-by-two (post)
+          .columns.small-12
+            +show-post(post, 'preview')
 
-      - var i = 0
-      each post in posts
-        if (  (i % 2) )
-          .row
+        - var i = 0
+        each post in posts
+          if (  (i % 2) )
+            .row
+              +show-post-two-by-two(post)
+          else
             +show-post-two-by-two(post)
-        else
-          +show-post-two-by-two(post)
 
-        - i ++
+          - i ++
+
+      - else
+        h1 No posts found
+
+        - if ( search )
+          p.panel.callout.text-center There were no posts matching your request: 
+            strong=search
 
     .columns.small-12.medium-4
       +show-search()

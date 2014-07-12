@@ -1,9 +1,14 @@
 extends ../layouts/layout
 
+include ../mixins/show-search
+
 block page
   .row
-    .columns.small-12.text-center
+    .columns.small-12.medium-8.text-center
 
       h1=(disclaimer || 'Page not found')
 
       p.panel.callout=(text || 'We are sorry. The page you are looking for was not found on this server.')
+
+    .columns.small-12.medium-4
+      +show-search()
