@@ -72,7 +72,11 @@ block document
   block scripts
     // script(src="http://cdn.sockjs.org/sockjs-0.3.min.js")
 
-    script(src='/bower_components/jquery/dist/jquery.min.js')
+    - if ( env === 'production' )
+      script(src='//code.jquery.com/jquery-2.1.1.min.js')
+
+    - else
+      script(src='/bower_components/jquery/dist/jquery.min.js')
     
     script(src='/cdn/js/foundation.min.js')
 
