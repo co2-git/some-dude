@@ -2,20 +2,20 @@ mixin show-search ()
   form(name='search')
     input(type='search' placeholder='Search' autofocus)
 
-    button.expand.radius Search
+    button.expand.radius
+      i.fa.fa-search
+      |   Search
 
     .row
       .columns.small-12
 
-        h2 
-          i.fa
-          |  Language 
-          a(href) all
-          span  
-          a(href) none
+        h2
+          i.fa.fa-language
+          |  Languages
 
     .row
       .columns.small-12
 
         each language in languages
-          button.round.secondary.language.tiny(type='button')=language
+          a.button.language.small.small-12.large-6.columns(href='/search/language/' + language
+            class=(_language && _language === language ? '': 'secondary'))=language

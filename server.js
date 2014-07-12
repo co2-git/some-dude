@@ -166,7 +166,7 @@ domain.run(function () {
     
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
-  app.get('/blog/search/language/:language', $('./routes/search-post-by-language').bind({ app: app }));
+  app.get('/search/language/:language', $('./routes/search-post-by-language').bind({ app: app }));
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
 

@@ -19,22 +19,12 @@ block page
         .columns.small-12
           +show-search()
 
-      //
-        .row
-          .columns.small-12
-            h4 View posts with the same language
-
-        each language in post.languages
-          a.button.secondary.small.columns.small-12.medium-6(href='/blog/search/language/' + language.key)=language.key
-          span
-
       .row
         .columns.small-12
-          h4 View posts with the same tags
+          h2
+            i.fa.fa-tag
+            |   Tags
 
       each tag in post.tags
-        a.button.secondary.small.columns.small-12.medium-6(href='/blog/search/tag/' + tag.key)=tag.key
-        span
-
-      .row
-        .columns.small-12
+        a.button.secondary.small.columns.small-12.large-6(href='/blog/search/tag/' + tag.key)=tag.key
+        span  
