@@ -73,6 +73,8 @@ domain.run(function () {
 
   app.use($('method-override')());
 
+  app.use($('compression')());
+
   /* Favicon */
   app.use($('serve-favicon')($('path').join(__dirname, 'public', 'cdn', 'images', 'face.png')));
 
