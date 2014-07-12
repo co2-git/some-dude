@@ -41,7 +41,7 @@ domain.run(function () {
   app.locals.require = $;
 
   app.locals.cache = {
-    queries: {}
+    pages: {}
   };
 
   app.locals.env = app.get('env');

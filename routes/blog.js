@@ -15,6 +15,15 @@ module.exports = function (req, res, next) {
   });
 
   domain.run(function () {
+
+    var cached = route.app.locals.cache.pages.home &&
+      route.app.locals.cache.pages.home[0];
+
+    if ( cached ) {
+      return res.send(cached.html);
+    }
+
+
     var options = {};
 
     if ( req.body.search ) {
@@ -83,13 +92,38 @@ module.exports = function (req, res, next) {
 
 
         domain.intercept(function (results) {
-          res.render('pages/blog', {
+
+          var options = route.app.locals;
+
+          var options2 = {
             page: 'blog',
             languages: results.languages,
             tags: results.tags,
             posts: results.posts,
             search: req.body.search
-          });
+          };
+
+          for ( var add in options2 ) {
+            options[add] = options2[add];
+          }
+
+          $('jade').renderFile(
+            $('path').join($('path').dirname(__dirname), 'views', 'pages', 'blog.jade'),
+            options,
+            domain.intercept(function (html) {
+
+              if ( ! route.app.locals.cache.pages.home ) {
+                route.app.locals.cache.pages.home = [];
+              }
+
+              route.app.locals.cache.pages.home[0] = {
+                html: html,
+                name: 'home',
+                cached: +new Date()
+              };
+
+              res.send(html);
+            }));
         }));
 
     }));
