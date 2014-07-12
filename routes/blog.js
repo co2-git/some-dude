@@ -35,7 +35,11 @@ module.exports = function (req, res, next) {
     }
 
     if ( cached ) {
-      return res.send(cached.html + '<!-- cached -->');
+      cached.views ++;
+      return res.send(cached.html + '<!-- cached ' +
+        route.app.locals.fromNow(cached.cached) + ' | viewed '+
+        cached.views + ' time(s) | size of cache: ' +
+        $('../lib/sizeof')(route.app.locals.cache) / (1024 * 1024) + '-->');
     }
 
     var options = {};
@@ -112,28 +116,32 @@ module.exports = function (req, res, next) {
               if ( req.body.search ) {
                 route.app.locals.cache.pages.search[req.body.search] = {
                   html: html,
-                  cached: +new Date()
+                  cached: +new Date(),
+                  views: 1
                 };
               }
 
               else if ( req.params.language ) {
                 route.app.locals.cache.pages.language_search[req.params.language] = {
                   html: html,
-                  cached: +new Date()
+                  cached: +new Date(),
+                  views: 1
                 };
               }
 
               else if ( req.params.tag ) {
                 route.app.locals.cache.pages.tag_search[req.params.tag] = {
                   html: html,
-                  cached: +new Date()
+                  cached: +new Date(),
+                  views: 1
                 };
               }
 
               else {
                 route.app.locals.cache.pages.home[0] = {
                   html: html,
-                  cached: +new Date()
+                  cached: +new Date(),
+                  views: 1
                 };
               }
 

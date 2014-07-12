@@ -94,6 +94,12 @@ domain.run(function () {
 
   app.locals.require = $;
 
+  /*/========\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\========\*\
+  \-\========-------------------------------------========/-/
+  |-|========            CACHE CONTROL            ========|-|
+  /-/========-------------------------------------========\-\
+  \*\========/////////////////////////////////////========/*/
+
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
         RAM CACHE
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
@@ -102,9 +108,57 @@ domain.run(function () {
     pages: {
       search: {},
       language_search: {},
-      tag_search: {}
+      tag_search: {},
+      posts: {}
     }
   };
+
+  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
+        MAINTAIN CACHE
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
+
+  setInterval(function () {
+    var sizeof_home = $('./lib/sizeof')(app.locals.cache.pages.home);
+    var limit_home = 1024 * 1024;
+
+    var sizeof_search = $('./lib/sizeof')(app.locals.cache.pages.search);
+    var limit_search = 1024 * 3;
+
+    process.send({ cachesize: {
+      home: sizeof_home,
+      search: sizeof_search
+    }});
+
+    if ( sizeof_home < limit_home ) {
+      throw new Exception('Cache boom!');
+    }
+
+    
+
+    if ( sizeof_search < limit_search ) {
+      var searches = [];
+
+      for ( var index in app.locals.search ) {
+        searches.push({ index: index, search: app.locals.search[index] });
+      }
+
+      searches = searches.sort(function (a, b) {
+        if ( a.views < b.views ) {
+          return -1;
+        }
+
+        else if ( a.views > b.views ) {
+          return 1;
+        }
+
+        return 0;
+      });
+
+      console.log(searches);
+
+      
+    }
+  }, 60 * 60 );
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
         MAKE ENV ACCESSIBLE TO VIEWS
