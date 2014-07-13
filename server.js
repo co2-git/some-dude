@@ -104,20 +104,14 @@ domain.run(function () {
         RAM CACHE
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
-  app.locals.cache = {
-    pages: {
-      search: {},
-      language_search: {},
-      tag_search: {},
-      posts: {}
-    }
-  };
+    app.locals.cache = [];
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
         MAINTAIN CACHE
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
   setInterval(function () {
+    return;
     var sizeof_home = $('./lib/sizeof')(app.locals.cache.pages.home);
     var limit_home = 1024 * 1024;
 
@@ -272,13 +266,13 @@ domain.run(function () {
         SEARCH POST BY LANGUAGE
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
-  app.get('/search/language/:language', $('./routes/search-post-by-language').bind({ app: app }));
+  app.get('/search/language/:language', $('./routes/blog').bind({ app: app }));
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
         SEARCH POST BY TAG
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
-  app.get('/search/tag/:tag', $('./routes/search-post-by-tag').bind({ app: app }));
+  app.get('/search/tag/:tag', $('./routes/blog').bind({ app: app }));
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
         SEARCH PAGE
