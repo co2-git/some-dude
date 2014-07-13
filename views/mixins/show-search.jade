@@ -16,6 +16,6 @@ mixin show-search ()
     .row
       .columns.small-12
 
-        each language in languages
-          a.button.language.small.small-12.large-6.columns(href='/search/language/' + language
-            class=(_language && _language === language ? '': 'secondary'))=language
+        each lang in languages
+          a.button.language.small.small-12.large-6.columns(href='/search/language/' + lang
+            class=(language && language === lang ? '': 'secondary'))=lang

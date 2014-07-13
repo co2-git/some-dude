@@ -106,7 +106,9 @@ module.exports = function (req, res, next) {
             page: 'blog',
             tags: results.tags,
             posts: results.posts,
-            search: req.body.search
+            search: req.body.search,
+            language: req.params.language,
+            tag: req.params.tag
           };
 
           for ( var add in options2 ) {

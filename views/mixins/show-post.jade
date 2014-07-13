@@ -35,6 +35,7 @@ mixin show-post(post, view)
 
           span  
 
-          each tag in post.tags
-            a.button.tiny.secondary.round(href='/search/tag/' + tag.key)=tag.key
+          each _tag in post.tags
+            a.button.tiny.round(href='/search/tag/' + _tag.key
+              class=(tag && tag === _tag.key ? '' : 'secondary'))=_tag.key
             span  
