@@ -1,5 +1,4 @@
-some dude's blog
-####
+# some dude's blog
 
 The source of some-dude-blog.com
 
@@ -16,8 +15,9 @@ Powered by:
 - Font Awesome
 - jQuery
 - Prism
+- Github
 
 Hosted by:
 
-- joyent (ubuntu instance) => nodejs server + redis server
-- joyent (ubuntu instance) => mongodb server
+- joyent (ubuntu instance 512MB) => nodejs server + redis server
+- joyent (ubuntu instance 512MB) => mongodb server
