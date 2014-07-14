@@ -24,7 +24,7 @@ Hosted by:
 
 # Install
 
-    # install npm dependencies
+    # install node modules and npm dependencies
     npm install https://github.com/co2-git/some-dude
     
     # install bower components
