@@ -16,61 +16,36 @@ module.exports = function (req, res, next) {
 
   domain.run(function () {
 
-    var skin = 'home';
-    var index;
+    var searchOptions = {};
+    var db;
 
     if ( req.body.search ) {
-      skin = 'search';
-      index = req.body.search;
+      searchOptions = { tags: { $elemMatch: { key: { $in: req.body.search.split(/\s+/) } } } };
     }
 
     else if ( req.params.language ) {
-      skin = 'language';
-      index = req.params.language;
+      searchOptions = { languages: { $elemMatch: { key: req.params.language } } };
     }
 
     else if ( req.params.tag ) {
-      skin = 'tag';
-      index = req.params.tag;
+      searchOptions = { tags: { $elemMatch: { key: req.params.tag } } };
     }
 
-    var cached;
-
-    route.app.locals.cache.forEach(function (cache) {
-      if ( cache.page === 'blog' && cache.skin === skin &&
-      cache.index == index ) {
-        cached = cache;
+    setTimeout(function () {
+      if ( ! db ) {
+        res.error = new Error('MongoDB time out');
+        return next();
       }
-    });
+    }, 1000 * 3);
 
-    if ( cached ) {
-      cached.views ++;
-      return res.send(cached.html + '<!-- cached ' +
-        route.app.locals.fromNow(cached.cached) + ' | viewed '+
-        cached.views + ' time(s) | size of cache: ' +
-        $('../lib/sizeof')(route.app.locals.cache) / (1024 * 1024) + ' MB -->');
-    }
+    $('../lib/connect')(domain.intercept(function (conn) {
 
-    var options = {};
-
-    if ( req.body.search ) {
-      options = { tags: { $elemMatch: { key: { $in: req.body.search.split(/\s+/) } } } };
-    }
-
-    if ( req.params.language ) {
-      options = { languages: { $elemMatch: { key: req.params.language } } };
-    }
-
-    if ( req.params.tag ) {
-      options = { tags: { $elemMatch: { key: req.params.tag } } };
-    }
-
-    $('../lib/connect')(domain.intercept(function (db) {
+      db = conn;
 
       $('async').parallel(
         {
           posts: function (cb) {
-            db.collection('blog').find(options)
+            db.collection('blog').find(searchOptions)
               .sort({ 'time.posted': -1 })
               .limit(25)
               .toArray(cb);
@@ -119,19 +94,11 @@ module.exports = function (req, res, next) {
             $('path').join($('path').dirname(__dirname), 'views', 'pages', 'blog.jade'),
             options,
             domain.intercept(function (html) {
+              
+              res.html = html;
 
-              var cache = {
-                html: html,
-                cached: +new Date(),
-                views: 1,
-                page: 'blog',
-                skin: skin,
-                index: index
-              };
-
-              route.app.locals.cache.push(cache);
-
-              res.send(html);
+              next();
+              // res.send(html);
             }));
         }));
 

@@ -104,55 +104,7 @@ domain.run(function () {
         RAM CACHE
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
-    app.locals.cache = [];
-
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
-        MAINTAIN CACHE
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
-
-  setInterval(function () {
-    return;
-    var sizeof_home = $('./lib/sizeof')(app.locals.cache.pages.home);
-    var limit_home = 1024 * 1024;
-
-    var sizeof_search = $('./lib/sizeof')(app.locals.cache.pages.search);
-    var limit_search = 1024 * 3;
-
-    process.send({ cachesize: {
-      home: sizeof_home,
-      search: sizeof_search
-    }});
-
-    if ( sizeof_home < limit_home ) {
-      throw new Exception('Cache boom!');
-    }
-
-    
-
-    if ( sizeof_search < limit_search ) {
-      var searches = [];
-
-      for ( var index in app.locals.search ) {
-        searches.push({ index: index, search: app.locals.search[index] });
-      }
-
-      searches = searches.sort(function (a, b) {
-        if ( a.views < b.views ) {
-          return -1;
-        }
-
-        else if ( a.views > b.views ) {
-          return 1;
-        }
-
-        return 0;
-      });
-
-      console.log(searches);
-
-      
-    }
-  }, 60 * 60 );
+  app.locals.cache = [];
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
         MAKE ENV ACCESSIBLE TO VIEWS
@@ -233,10 +185,54 @@ domain.run(function () {
   \*\========/////////////////////////////////////========/*/
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
-        HOME
+        POSTS
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
-  app.get('/', $('./routes/blog').bind({ app: app }));
+  [ { get: '/' },
+    { get: '/blog' },
+    { post: '/search' },
+    { get: '/search/language/:language' },
+    { get: '/search/tag/:tag' }
+  ].forEach(function (route) {
+    var method = Object.keys(route)[0];
+
+    app[method](route[method],
+      function (req, res, next) {
+        res.page = 'home';
+
+        if ( req.body.search ) {
+          res.page = 'search/' + req.body.search.split(/\s+/).join('/');
+        }
+
+        else if ( req.params.language ) {
+          res.page = 'language/' + req.params.language;
+        }
+
+        else if ( req.params.tag ) {
+          res.page = 'tag/' + req.params.tag;
+        }
+
+        next();
+      },
+      $('./routes/get-cache').bind({ app: app }),
+      $('./routes/blog').bind({ app: app }),
+      $('./routes/create-cache').bind({ app: app }));
+  });
+
+  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
+        POST
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
+
+  app.get('/blog/:post_id/:post_slug',
+    function (req, res, next) {
+        res.page = 'post_' + req.params.post_id;
+
+        next();
+      },
+      $('./routes/get-cache').bind({ app: app }),
+      $('./routes/post').bind({ app: app }),
+      $('./routes/create-cache').bind({ app: app }));
+  // app.get('/blog/:post_id', $('./routes/post').bind({ app: app }));
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
         PROJECTS
@@ -250,42 +246,12 @@ domain.run(function () {
 
   app.get('/projects/:project_name', $('./routes/project').bind({ app: app }));
 
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
-        BLOG
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
-
-  app.get('/blog', $('./routes/blog').bind({ app: app }));
-
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
-        SEARCH FORM
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
-
-  app.post('/search', $('./routes/blog').bind({ app: app }));
-
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
-        SEARCH POST BY LANGUAGE
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
-
-  app.get('/search/language/:language', $('./routes/blog').bind({ app: app }));
-
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
-        SEARCH POST BY TAG
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
-
-  app.get('/search/tag/:tag', $('./routes/blog').bind({ app: app }));
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
         SEARCH PAGE
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
   app.get('/search', $('./routes/search').get.bind({ app: app }));
-
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
-        POST
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
-
-  app.get('/blog/:post_id/:post_slug', $('./routes/post').bind({ app: app }));
-  app.get('/blog/:post_id', $('./routes/post').bind({ app: app }));
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
         STATIC ROUTER

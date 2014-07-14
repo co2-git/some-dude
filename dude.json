@@ -39,7 +39,10 @@
     {
       "service": "mongodb",
       "arguments": [
-        "--dbpath", "data", "--port", "33368"
+        "--dbpath",
+        "data",
+        "--port",
+        "33368"
       ]
     },
     {
@@ -48,6 +51,7 @@
     }
   ],
   "dependencies": {
-    "mongodb": "2.6.1"
+    "mongodb": "2.6.1",
+    "redis": "2.8.11"
   }
 }

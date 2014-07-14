@@ -1,6 +1,8 @@
 var $ = require;
 
 module.exports = function (req, res, next) {
+  var route = this;
+
   if ( res.error ) {
     return next();
   }
@@ -64,12 +66,27 @@ module.exports = function (req, res, next) {
 
 
         domain.intercept(function (results) {
-          res.render('posts/' + req.params.post_id, {
+
+          var options = route.app.locals;
+
+          var options2 = {
             page: 'post',
             languages: results.languages,
             tags: results.tags,
             post: results.post
-          });
+          };
+
+          for ( var add in options2 ) {
+            options[add] = options2[add];
+          }
+
+          $('jade').renderFile(
+            $('path').join($('path').dirname(__dirname), 'views', 'posts', req.params.post_id + '.jade'),
+            options,
+            domain.intercept(function (html) {
+              res.html = html;
+              next();
+            }));
         }));
 
     }));
