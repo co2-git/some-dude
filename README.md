@@ -24,6 +24,8 @@ Hosted by:
 
 # Install
 
+Recommended OS: Ubuntu 14 64bits
+
     # install node modules and npm dependencies
     npm install https://github.com/co2-git/some-dude
     
