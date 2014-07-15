@@ -1,6 +1,7 @@
 mixin show-search ()
+  // SEARCH FORM
   form(name='search' method='POST' action='/search')
-    input(type='search' placeholder='Search' autofocus name='search' value=( search || ''))
+    input(type='search' placeholder='Search' name='search' value=( search || ''))
 
     button.expand.radius
       i.fa.fa-search
@@ -11,7 +12,7 @@ mixin show-search ()
 
         h2
           i.fa.fa-language
-          |  Languages
+          |  Languages22
 
     .row
       .columns.small-12

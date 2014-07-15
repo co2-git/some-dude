@@ -15,6 +15,7 @@ module.exports = function (req, res, next) {
   });
 
   domain.run(function () {
+    return next();
     if ( ! $('./get-cache').client ) {
       $('./get-cache').client = $('redis').createClient(33369);
     }
