@@ -24,14 +24,27 @@ Hosted by:
 
 # Install
 
+Recommended OS: Ubuntu 14 64bits
+
+    # install node modules and npm dependencies
     npm install https://github.com/co2-git/some-dude
+    
+    # install bower components
     cd some-dude/public
     bower install
     cd ..
-    dude install mongodb redis
-    dude run mongodb bin/start --port 33368 --dbpath data/
-    dude run redis src/redis-server --port 33369
+    
+    # install mongodb and redis
+    dude install
+    
+    # build environment
     dude build
-    dude start server.js
-    # dude reload server.js
-    # dude stop
+    
+    # start services
+    dude start
+    
+    # Reload the server with 0 second downtime
+    dude reload server.js
+    
+    # Stop all services
+    dude stop
