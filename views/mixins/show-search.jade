@@ -31,6 +31,9 @@ mixin show-search ()
     .row
       .columns.small-12
 
-        each _tag in tags
-          a.button.tag.small.small-12.large-6.columns(href='/search/tag/' + _tag
-            class=(tag && tag === _tag ? '': 'secondary'))=_tag
+        ul
+          each _tag in tags
+            li
+              a(href='/search/tag/' + _tag
+              class=(tag && tag === _tag ? '': 'secondary'))
+                big=_tag

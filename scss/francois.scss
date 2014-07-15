@@ -125,15 +125,8 @@ body {
     ********************************************* */
 
   [name=search] {
-    .tag:nth-child(odd) {
-      clear: left;
-      display: block
-    }
-
-    .tag:nth-child(even) {
-      clear: right;
-      display: block;
-      // word-wrap: break-word
+    li {
+      list-style-type: none
     }
   }
 
