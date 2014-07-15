@@ -18,6 +18,7 @@ module.exports = function (req, res, next) {
 
     var searchOptions = {};
     var db;
+    var posts;
 
     if ( req.body.search ) {
       searchOptions = { tags: { $elemMatch: { key: { $in: req.body.search.split(/\s+/) } } } };
@@ -42,33 +43,58 @@ module.exports = function (req, res, next) {
 
       db = conn;
 
-      $('async').parallel(
+      $('async').series(
         {
           posts: function (cb) {
             db.collection('blog').find(searchOptions)
               .sort({ 'time.posted': -1 })
               .limit(25)
-              .toArray(cb);
+              .toArray(domain.intercept(function (results) {
+                posts = results;
+                cb(null, posts);
+              }));
           },
 
           tags: function (cb) {
-            db.collection('blog').find({},
-              {
-                _id: 0, id: 0, title: 0, slug: 0, blurb: 0, languages: 0
-              })
-              .toArray(domain.intercept(function (posts) {
-                var tags = [];
 
-                posts.forEach(function (post) {
-                  post.tags.forEach(function (tag) {
-                    if ( tags.indexOf(tag.key) === -1 ) {
-                      tags.push(tag.key);
-                    }
-                  });
-                });
+            cb(null,
+              posts
                 
-                cb(null, tags.sort());
-              }));
+                .reduce(function (tags, post) {
+                  post.tags.forEach(function (tag) {
+                    tags.push(tag);
+                  });
+
+                  return tags;
+                }, [])
+
+                .reduce(function(tags, tag) {
+                  if ( tags.indexOf(tag.key) === - 1 ) {
+                    tags.push(tag.key);
+                  }
+
+                  return tags;
+                }, [])
+                
+                .sort());
+
+            // db.collection('blog').find({},
+            //   {
+            //     _id: 0, id: 0, title: 0, slug: 0, blurb: 0, languages: 0
+            //   })
+            //   .toArray(domain.intercept(function (posts) {
+            //     var tags = [];
+
+            //     posts.forEach(function (post) {
+            //       post.tags.forEach(function (tag) {
+            //         if ( tags.indexOf(tag.key) === -1 ) {
+            //           tags.push(tag.key);
+            //         }
+            //       });
+            //     });
+                
+            //     cb(null, tags.sort());
+            //   }));
           }
         },
 

@@ -53,5 +53,9 @@
   "dependencies": {
     "mongodb": "2.6.1",
     "redis": "2.8.11"
+  },
+  "background": {
+    "db": "redis",
+    "port": 33369
   }
 }

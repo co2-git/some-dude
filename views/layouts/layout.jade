@@ -53,12 +53,6 @@ block document
   //- Page
   section(role='main')
     block page
-    //
-      .row
-        .columns.small-12.medium-8
-          block main
-        .columns.small-12.medium-4
-          block aside
 
   ///- Footer
   footer(role='contentinfo')
@@ -73,8 +67,6 @@ block document
 
   //- Scripts
   block scripts
-    // script(src="http://cdn.sockjs.org/sockjs-0.3.min.js")
-
     - if ( env === 'production' )
       script(src='//code.jquery.com/jquery-2.1.1.min.js')
 

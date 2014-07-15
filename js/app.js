@@ -9,8 +9,6 @@
         SHOW SEARCH
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
-  var issue3;
-
   $('.reveal-search').on('click', function (e) {
     if ( isSmall() ) {
       $('body').animate({ scrollTop: $('form[name=search]').offset().top }, 'slow',
