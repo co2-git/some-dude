@@ -17,7 +17,7 @@ block page
     aside.columns.small-12.medium-4
       .row
         .columns.small-12
-          +show-search()
+          +show-search(true)
 
       .row
         .columns.small-12
@@ -25,6 +25,13 @@ block page
             i.fa.fa-tag
             |   Tags
 
-      each tag in post.tags
-        a.button.secondary.small.columns.small-12.large-6(href='/search/tag/' + tag.key)=tag.key
-        span  
+
+      .row
+        .columns.small-12
+          ul.tags
+            each tag in post.tags
+              li
+                big
+                  i.fa.fa-tag
+                  span  
+                  a(href='/search/tag/' + tag.key)=tag.key

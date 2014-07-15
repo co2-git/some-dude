@@ -1,4 +1,4 @@
-mixin show-search ()
+mixin show-search (isPost)
   // SEARCH FORM
   form(name='search' method='POST' action='/search')
     input(type='search' placeholder='Search' name='search' value=( search || ''))
@@ -21,19 +21,22 @@ mixin show-search ()
           a.button.language.small.small-12.large-6.columns(href='/search/language/' + lang
             class=(language && language === lang ? '': 'secondary'))=lang
 
-    .row
-      .columns.small-12
+    - if ( ! isPost )
+      .row
+        .columns.small-12
 
-        h2
-          i.fa.fa-tags
-          |  Tags
+          h2
+            i.fa.fa-tags
+            |  Tags
 
-    .row
-      .columns.small-12
+      .row
+        .columns.small-12
 
-        ul
-          each _tag in tags
-            li
-              a(href='/search/tag/' + _tag
-              class=(tag && tag === _tag ? '': 'secondary'))
-                big=_tag
+          ul.tags
+            each _tag in tags
+              li
+                big
+                  i.fa.fa-tag
+                  span  
+                  a(href='/search/tag/' + _tag
+                  class=(tag && tag === _tag ? '': 'secondary'))=_tag

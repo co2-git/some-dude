@@ -124,9 +124,13 @@ body {
     SEARCH FORM
     ********************************************* */
 
-  [name=search] {
+  .tags {
     li {
-      list-style-type: none
+      list-style-type: none;
+
+      i {
+        opacity: .5
+      }
     }
   }
 
