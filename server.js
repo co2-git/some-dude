@@ -248,10 +248,10 @@ domain.run(function () {
 
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
-        SEARCH PAGE
+        SIGN IN
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
-  app.get('/search', $('./routes/search').get.bind({ app: app }));
+  app.get('/sign-in', $('./routes/sign-in').bind({ app: app }));
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
         STATIC ROUTER

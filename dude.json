@@ -22,8 +22,7 @@
           "public/bower_components/foundation/js/vendor/fastclick.js",
           "public/bower_components/foundation/js/foundation/foundation.js",
           "public/bower_components/foundation/js/foundation/foundation.dropdown.js",
-          "public/bower_components/foundation/js/foundation/foundation.magellan.js",
-          "public/bower_components/foundation/js/foundation/foundation.topbar.js"
+          "public/bower_components/foundation/js/foundation/foundation.abide.js"
         ],
         "dest": "public/cdn/js/foundation.min.js"
       },
