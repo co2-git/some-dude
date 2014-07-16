@@ -6,11 +6,16 @@ block page
 
   .row.post-page
     .columns.small-12.medium-8.main
+
+      p.text-center Posted 
+        b=fromNow(post.time.posted)
       
       h1=post.title
 
       .panel.radius.callout
         big=post.blurb
+
+
 
       block post
 
