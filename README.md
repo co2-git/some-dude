@@ -35,7 +35,11 @@ Recommended OS: Ubuntu 14 64bits
         "mongodb": {
             "host": Your host here,
             "port": Your port here,
-            "db": Your db here
+            "db": Your db here,
+            "auth": {
+                "user": Your user here,
+                "password": Your password here
+            }
         }
     }
     CONFIG
