@@ -11,7 +11,7 @@
 
   $('.reveal-search').on('click', function (e) {
     if ( isSmall() ) {
-      $('body').animate({ scrollTop: $('form[name=search]').offset().top }, 'slow',
+      $('body').animate({ scrollTop: $('form[name=search]').offset().top + 35 }, 'slow',
         function () {
           $('form[name=search] [type=search]').focus();
         });
