@@ -29,6 +29,21 @@ Recommended OS: Ubuntu 14 64bits
     # install node modules and npm dependencies
     npm install https://github.com/co2-git/some-dude
     
+    # config file
+    cat << CONFIG > .config.json
+    {
+        "mongodb": {
+            "host": Your host here,
+            "port": Your port here,
+            "db": Your db here,
+            "auth": {
+                "user": Your user here,
+                "password": Your password here
+            }
+        }
+    }
+    CONFIG
+    
     # install bower components
     cd some-dude/public
     bower install
