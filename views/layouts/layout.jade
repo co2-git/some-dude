@@ -50,6 +50,10 @@ block document
         a.reveal-search(href='#')
           i.fa.fa-search
 
+        - if ( loggedin )
+          a(href='/sign-out')
+            i.fa.fa-sign-out
+
   //- Page
   section(role='main')
     block page

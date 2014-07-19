@@ -106,6 +106,20 @@ domain.run(function () {
 
   app.locals.cache = [];
 
+  /*/========\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\========\*\
+  \-\========-------------------------------------========/-/
+  |-|========           SESSION & COOKIES         ========|-|
+  /-/========-------------------------------------========\-\
+  \*\========/////////////////////////////////////========/*/
+
+  app.locals.session = {};
+
+  app.locals.secret = (process.pid + Math.random()).toString();
+
+  app.use($('cookie-parser')(app.locals.secret));
+
+  app.use($('express-session')({ secret: app.locals.secret }));
+
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
         MAKE ENV ACCESSIBLE TO VIEWS
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
@@ -251,7 +265,22 @@ domain.run(function () {
         SIGN IN
       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
 
-  app.get('/sign-in', $('./routes/sign-in').bind({ app: app }));
+  app.get('/sign-in', $('./routes/sign-in').get.bind({ app: app }));
+  app.post('/sign-in', $('./routes/sign-in').post.bind({ app: app }));
+
+  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
+        SIGN OUT
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
+
+  app.get('/sign-out', $('./routes/sign-out').bind({ app: app }));
+
+  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
+        ADMIN
+      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
+
+  app.get('/admin',
+    $('./routes/must-be-logged-in').bind({ app: app }),
+    $('./routes/admin').bind({ app: app }));
 
   /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
         STATIC ROUTER
