@@ -1,46 +1,68 @@
 #! /usr/bin/env node
 
-/*/========\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\========\*\
-\-\========-------------------------------------========/-/
-|-|========               CEREMONY              ========|-|
-/-/========-------------------------------------========\-\
-\*\========/////////////////////////////////////========/*/
+/*/================================\*\
+|*|
+|*|
+|*| CEREMONY
+|*|
+|*|
+\*\================================/*/
 
 var $ = require;
+
+/** This script is supposed to be run via a cluster
+  If not, use console.log instead of process.send
+  **/
 
 if ( ! process.send ) {
   process.send = console.log;
 }
 
+/** The domain to run the server in
+  http://some-dude-blog.com/blog/1/domains-in-javascript-or-how-to-try-catch-errors-in-asynchronous-code
+  **/
+
 var domain = $('domain').create();
 
+/** The domain error handler
+  **/
+
 domain.on('error', function (error) {
-  process.send({ error: $('util').inspect(error) });
+  process.send({ 'uncaught error': $('util').inspect(error) });
 });
+
+/** Start domain
+  **/
 
 domain.run(function () {
 
+  /** Give process a title so it is easily identificable in processes
+    **/
+
   process.title = 'some-server';
+
+  /** Get module information
+    **/
 
   var package = $('./package.json');
 
-  /*/========\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\========\*\
-  \-\========-------------------------------------========/-/
-  |-|========             EXPRESS APP             ========|-|
-  /-/========-------------------------------------========\-\
-  \*\========/////////////////////////////////////========/*/
+  /*/================================\*\
+  |*|
+  |*|
+  |*| EXPRES APP
+  |*|
+  |*|
+  \*\================================/*/
 
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
-        DEPENDENCIES + START EXPRESS APP
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
+  /** App dependencies
+    **/
 
   var express     = $('express');
   var app         = express();
   var bodyParser  = $('body-parser');
 
-  /** ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **\
-        GET LANGUAGES FROM MONGODB
-      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ **/
+  /** Get a list of languages from MongoDB
+    **/
 
   $('./lib/connect')(domain.intercept(function (db) {
     db.collection('blog').find({},

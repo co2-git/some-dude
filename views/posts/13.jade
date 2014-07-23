@@ -3,11 +3,26 @@ extends ../layouts/post
 block post
   p The 
     a(href='http://www.joelonsoftware.com/articles/fog0000000043.html' target='_blank') Joel Test
-    |   is an often used test for grass-root-level benchmarking of a project or a team. It gives a ruff blueprint on how to operate in order to make sure you are efficient. Keep in mind that like everything in coding management, these are more 
+    |   is a test in a form of a quizz - which answers give you insightful feedback about your project or your team. It delivers a rough blueprint on how to organize your team and your code, which tools to use and which methodology to consider.
+
+  p Keep in mind that like everything in coding management, these are more 
     a(href='http://heavyeditorial.files.wordpress.com/2013/06/potc-the-pirates-guidelines.jpg?w=640&h=360' target='_blank') guidelines
-    |  that written-in-stone rules. The Joel-Test was written in 2000 and a lot has changed since then - especially in a ever-changing industry like the web. Yet this test is still used as a frame of reference to evaluate a project or the way an agency functions.
+    |  that written-in-stone rules.
+
+  p The Joel-Test was written back in 2000. In the web industry, this is like ages. Lots have changed. Yet the Joel-Test is still widly in use. It could even have shaped some parts of what the industry looks like today. Incidentally, some technologies have appeared since then which comply with some - or all - of the test:
+
+  ul
+    li
+      a(href='http://agilemethodology.org/' target='_blank') Agile
+    li
+      a(href='http://en.wikipedia.org/wiki/Test-driven_development' target='_blank') TDD
+    li
+      a(href='https://github.com' target='_blank') GitHub
+    li
+      a(href='http://docs.seleniumhq.org/' target='_blank') Selenium
+
   
-  h2 The 12 steps
+  h2 The Joel-Test
 
   ol
     li Do you use source control?
@@ -22,115 +37,5 @@ block post
     li Do you have testers?
     li Do new candidates write code during their interview?
     li Do you do hallway usability testing?
-
-  h2 Do you use source control?
-
-  p 
-    a(href='http://en.wikipedia.org/wiki/Source_Control_Management' target='_blank') Source control 
-    |   is a must in a successful project. Top-dog vendors include:
-
-  ul
-    li
-      a(href='http://git-scm.com/' target='_blank') git
-    li
-      a(href='http://subversion.apache.org/' target='_blank') subversion (svn)
-    li
-      a(href='http://mercurial.selenic.com/' target='_blank') mercurial
-
-  p Famous 
-    a(href='http://en.wikipedia.org/wiki/Software_as_a_service' target='_blank') SaaS 
-    |   include:
-
-  ul
-    li
-      a(href='https://github.com' target='_blank') GitHub
-    li
-      a(href='https://bitbucket.org' target='_blank') BitBucket
-
-  p Source control enables you to:
-
-  ul
-    li Share code in a central repository (hence having one official copy)
-    li Create various sandboxes of your code (branches)
-    li Go back and forth in time (revert to a previous version)
-    li Have your team work together (merge and conflicts)
-    li Code review (pull requests)
-    li Deployment (tags)
-
-  h2 Can you make a build in one step?
-
-  p Do you have a script that a developer can install easily on his machine and get working? Or that your app can be installed on a new server flowlessly? This includes the dependencies and OS control. An example is that, if you have a Node project, it should be all installed in one step using 
-    code npm install project
-    | . If you need to interact on the OS (install dependencies, check OS distrib, etc) you can use 
-    a(href='https://github.com/TooTallNate/node-gyp' target='_blank') gyp
-    |   so everything is done in the install step.
-
-  p Note that this build-in-one-step rule of thumb is mostly a reminder that your app should have a build code and that it should be:
-
-  ul
-    li Simple to install
-    li Interoperable on all the platforms you target
-
-  p A lot of Unix projects are actually installed in 3 steps:
-
-  ul
-    li configure
-    li make
-    li make install
-
-  p Still effortless to build :)
-
-  p Build may also refer to the process of building your development environment into production or ready-to-use code. If your project is in Java, C++ or Go, this might mean simply compiling the code. If it is a front-end project, this might mean simply minifying your assets.
-
-  p I will sum up this step by these questions:
-
-  ul
-    li What would happen if all your servers (development, production) got erased?
-    li How fast would you be able to install a fully functionable version of your code?
-
-  h2 Do you make daily builds?
-
-  p The idea behind this one is to make sure - as often as possible - that your app can build OK. Of course, since 2000, things have changed and we now have a battery of automated tests that should be running frequently to make sure everything is complying with the specs. It is a good practice nonetheless to check regularly that your app's logics and code integrity are doing what they are supposed to do. Do not assume everything is well based on your last week's build. Lot can happen. Your code is a living thing. A daily check guarantees that the app is behaving as intended. Prevention is better than cure.
-
-  h2 Do you have a bug database?
-
-  p How do you deal with bugs? Only reporting them to 
-    a(href='http://www.redmine.org/' target='_blank') Redmine
-    |   is not enough. You will end up with a lot of duplicates and a huge list of 5000 thousand bugs - all marked with high priority.
-
-  p Bugs tell you a lot - about your code, your developers and the overall management of the project. You have several ways of reporting a bug:
-
-  ul
-    li A bug found by your testers or your developers
-    li A bug found by an automation framework (such as 
-      a(href='http://visionmedia.github.io/mocha/' target='_blank') Mocha
-      |   or 
-      a(href='http://docs.seleniumhq.org/' target='_blank') Selenium
-      |  )
-    li A bug reported by your users via a bug tracker (like 
-      a(href='https://guides.github.com/features/issues/' target='_blank') GitHub issues
-      |   for an Open Source project or a Feedback widget like 
-      a(href='https://www.uservoice.com/widget/' target='_blank') UserVoice
-      |  )
-
-  h2 Do you fix bugs before writing new code?
-
-  p Once again, since 2000, we now have 
-    a(href='http://semver.org/' target='_blank') semver
-    |   which puts emphasize on dealing with bugs before implementing new features. Usually the client is the one always pushing for new features, when developers request more time to stabilize the code before moving forward. Since the client is always right, it is sometimes difficult to fix bugs and hold whishlist in a pending state. Let's face it, in an ideal world, bugs get fixed before new features get implemented. In a real world where it's important to be a step forward your neck-to-neck competition, shine with new features is tempting and usually enforced by the client. It is a fast-moving industry and developers should get the best tools possible to track and solve bugs as soon as possible. Examples are 
-    a(href='http://en.wikipedia.org/wiki/Test-driven_development' target='_blank') TDD
-    |   or automation/regression testing in general.
-
-  h2 Do you have an up-to-date schedule?
-
-  p Road map and milestones are jargon of the project's everyday life. Nobody is alone in the project and a calendar allows all to be able to work together. You can divide your road map into milestones that can represent versions. Then you can break down these milestones into weekly or bi-weekly 
-    a(href='http://scrummethodology.com/scrum-sprint/' target='_blank') sprints
-    |  . A lot of project management tools (like 
-    a(href='https://plan.io' target='_blank') PlanIO
-    |   or 
-    a(href='http://trac.edgewall.org/roadmap' target='_blank') Trac
-    |  ) offer road map utilities.
-
-    p Deadlines are not always easy to meet. It takes strong skills to compromise between delivery date and the quintessential difficulty to plan ahead something as complex as developing / testing / shipping. If you are the project manager, your role is to know your team's abilities and the product's requirements well so you can foresee these shipping times. My rule of thumb is that flexibility should prime over organization.
 
   hr
