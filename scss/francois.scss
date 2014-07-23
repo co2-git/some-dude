@@ -146,6 +146,8 @@ body {
   // border-top: 1px solid #ccc;
   // border-bottom: 3px solid #eee;
 
+
+
   & + .post {
     border-top: none
   }
@@ -168,5 +170,10 @@ body {
   h1 {
     font-size: rem-calc(36);
     margin-bottom: 32px
+  }
+
+  p {
+    font-size: rem-calc(18) !important;
+    margin: 30px 0
   }
 }

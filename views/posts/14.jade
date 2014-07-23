@@ -1,0 +1,220 @@
+extends ../layouts/post
+
+block post
+  p You are ready to push your Express app on production. You have tested thoroughly in your local machine. Now it's time to broadcast!
+  h2
+    small #1
+    span  Adapt your code to production
+
+  p Express comes with a handy way to check in which environment it is running in:
+
+  pre.language-javascript
+    code.language-javascript.
+      
+      app.get('env');
+      // returns a string with the name of the environment
+
+
+  p By default, it returns 
+    code development
+    |  . Now that you want to emit on production, you need to change that to 
+    code production
+    |  . You do that by exporting a variable via the terminal:
+
+  pre.language-bash
+    code.language-bash.
+      
+      export NODE_ENV=production
+
+
+  p Now in your code, you can adapt business logics according to the environment.
+
+  pre.language-javascript
+    code.language-javascript.
+      
+      if ( app.get('env') === 'development' ) {
+        // do something for when in development
+      }
+
+      else if ( app.get('env') === 'production' ) {
+        // do something for when in production
+      }
+
+
+  p You can also set it as a local variable that will be inherited to all your views. For example if you use Jade:
+
+  pre.language-javascript
+    code.language-javascript.
+
+      // In your Express app file:
+
+      app.locals.env = app.get('env');
+
+      // In your jade view file:
+
+      - if ( env === 'development' )
+        h1='You are in development'
+
+      - else
+        h1='You are in ' + env
+
+
+
+
+  h2
+    small #2
+    span  Move app from port 3000 to port 80
+
+  p So far, you were streaming your app in your local machine from port 3000. Now that you are in production, you want to stream from port 80. Problem is that in Linux, ports till 1024 can be listened to only by applications run by 
+    code root
+    |  or 
+    code sudo
+    |  . 
+
+  p I have seen a lots of people doing that by doing 
+    code sudo su
+    |   and start their Express server as 
+    code root
+    | . I don't recomend doing so. If ever you do, make sure the environment variables are the same than when using your development user. When you 
+    code sudo su
+    |  you will lose them:
+
+  pre.language-bash
+    code.language-bash.
+
+      export PORT=80
+      sudo su
+      node app
+
+
+
+  p Here, 
+    code PORT
+    |   was not exported when going 
+    code sudo su
+    | , so Express will start on default port, and not on port 80.
+
+  p If you want to use 
+    code root
+    |   to run your Express app, prefer this way:
+
+
+  pre.language-bash
+    code.language-bash.
+
+      export PORT=80
+      su root
+      node app
+
+
+  p This way, you'll keep the environment variables.
+
+  p Yet I prefer personnally not running my Express app as 
+    code root
+    | . I try to use 
+    code root
+    |   only if I really have to. The technique I heart is to forward the port 80 to the port 3000 - or whatever port number your app streams from in development. Run the following command as 
+    code root
+    | .
+
+  pre.language-bash
+    code.language-bash.
+
+      iptables -t nat -I PREROUTING \
+        --source 0/0 --destination 0/0 -p tcp \
+        --dport 80 -j REDIRECT --to-ports 3000
+
+
+  h2
+    small #3
+    span  Use node cluster
+
+  p There are many resons why you should use Node's 
+    a(href='http://nodejs.org/api/cluster.html' target='_blank') cluster module
+    |   when in production:
+
+  ul
+    li Server restarts automatically if an uncaught error brought the server down
+    li Can reload the server with zero-second downtime (you can update the code hosted in production without bringing it down)
+    li Server does not stop when you disconnect from SSH
+    li If well configured, server is always on line
+
+  h2
+    small #4
+    span  Behave like a server node
+
+  p One of the biggest differences between development and environment is that in development everything lives together: the server, the web sockets, the database, the cache, etc. Now that your Express app is clustered and behind a load balancer, some things will change. Stuff like sessions or Socket.IO will begin to err. The best is to use some type of memory cache like Redis that a server can query.
+
+  h2
+    small #5
+    span  Higher-level of error handling
+
+  p Now that your app is in production, it has to handle errors very well in case one takes down the server. This is how you can achieve that:
+
+  ul
+    li Add a listener to your server errors
+
+      pre.language-javascript
+        code.language-javascript.
+
+          var server = $('http').createServer(app);
+
+          server.on('error', function (error) {
+            // possible strategy here: log error and restart server
+            });
+
+    li Use 
+      a(href='/blog/1/domains-in-javascript-or-how-to-try-catch-errors-in-asynchronous-code') domains
+
+    li Create a new Express middleware for errors
+
+      pre.language-javascript
+        code.language-javascript.
+
+          app.use(function (error, req, res, next) {
+            if ( ! error ) {
+              return next();
+            }
+
+            if ( error && app.get('env') === 'production' ) {
+              // deal with route errors in production
+            }
+          });
+
+    li Use cluster to reload the server fork on exit
+
+      pre.language-javascript
+        code.language-javascript.
+
+          fork.on('exit', function (status) {
+            // what to do if a fork died
+          });
+
+
+  h2
+    small #6
+    span  Compression
+
+  p A compressed content is faster to download. You can use the middleware 
+    code compression
+    |   for that.
+
+  pre.language-bash
+    code.language-bash.
+
+      npm install compression
+
+
+  pre.language-javascript
+    code.language-javascript.
+
+      var compression = require('compression');
+
+      app.use(compression());
+
+
+  p You can use online tools like 
+    a(href='http://www.gziptest.com/' target='_blank') GZip compression test
+    |   to verify compression is enabled.
+
+  hr
