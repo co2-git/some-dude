@@ -1,0 +1,131 @@
+extends ../layouts/post
+
+block post
+  
+  p For this post we'll imagine a very classic repertory layout for our Angular app:
+
+  pre.
+    |_ index.js
+    |_ controllers/     // where our controller files reside
+      |_ player.js
+    |_ directives/      // where our directive files reside
+      |_ playlist.js
+    |_ factories/       // where our factory files reside
+      |_ media.js
+    |_ filters/         // where our filter files reside
+      |_ format.js
+
+  p The challenge here is how to include one file from another. You could use the 
+    code script
+    |   tag or 
+    a(href='http://requirejs.org/' target='_blank') require.js
+    | , but for this example we'll see how to use 
+    a(href='/blog/4/how-and-why-to-use-browserify' target='_blank') Browserify
+    | . Browserify comes with a function called 
+    code require
+    |   which allows use to use it like if we were in Node.
+
+  h2 index.js
+
+  pre.language-javascript
+    code.language-javascript.
+
+      var ngmodule = angular.module('my-module', []);
+
+      // our factories
+
+      ngmodule.factory({
+        MediaFactory: require('./factories/media')
+      });
+
+      // our filters
+
+      ngmodule.filter({
+        formatFiler: require('./filters/format')
+      });
+
+      // our controllers
+
+      ngmodule.controller({
+        playerCtrl: require('./controllers/player')
+      });
+
+      // our directives
+
+      ngmodule.directive({
+        prefixPlaylist: require('./directives/playlist')
+      });
+
+
+  h2 Controllers
+
+  pre.language-javascript
+    code.language-javascript.
+
+      module.exports = function ($scope, MediaFactory) {
+        // your code here ...
+      };
+
+
+  h2 Directives
+
+  pre.language-javascript
+    code.language-javascript.
+
+      module.exports = function (playerCtrl) {
+        return {
+          restrict: 'A',
+          link: function ($scope, $elem, $attrs) {
+            // your code here ...
+          };
+        };
+      };
+
+
+  h2 Factories
+
+  pre.language-javascript
+    code.language-javascript.
+
+      module.exports = function ($http) {
+        return {
+          get: function (options) {
+            // your code here ...
+          }
+        };
+      };
+
+
+
+  h2 Filters
+
+  pre.language-javascript
+    code.language-javascript.
+
+      module.exports = function () {
+        return function (str) {
+          // your code here ...
+        };
+      };
+
+  h2 Browserify
+
+  p Now you can use browserify to compile your index.js
+
+  pre.language-bash
+    code.language-bash.
+      
+      npm install -g browserify
+
+      browserify index.js > bundle.js
+
+
+  p And from your HTML:
+
+  pre.language-markup
+    code.language-markup.
+
+      &lt;script src='/bundle.js'>&lt;/script>
+      
+
+  hr
