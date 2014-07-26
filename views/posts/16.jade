@@ -1,0 +1,199 @@
+extends ../layouts/post
+
+block post
+
+  p Install MongoDB node driver.
+
+  pre.language-bash
+    code.language-bash.
+
+      npm install mongodb
+
+
+  p In your script:
+
+  pre.language-javascript
+    code.language-javascript.
+
+      var mongodb = require('mongodb');
+      var client = mongodb.MongoClient;
+
+      var mongodb_host = '127.0.0.1';
+      var mongodb_port = 27017;
+      var mongodb_db = 'my_db';
+
+      var address = 'mongodb://' +
+        mongodb_host + ':' + mongodb_port + '/' + mongodb_db;
+
+      client.connect(address,
+        function (error, db) {});
+
+
+  h2
+    small #1 
+    span Create a new collection
+
+  pre.language-javascript
+    code.language-javascript.
+
+      db.createCollection('players',
+        function (error, players) {});
+
+
+  h2
+    small #2 
+    span Insert a new document
+
+  pre.language-javascript
+    code.language-javascript.
+
+      players.insert({
+          name: 'Leo Messi',
+          team: 'FC Barca'
+        }, function (error, inserted) {});
+      
+
+  h2
+    small #3 
+    span Insert various documents
+
+  pre.language-javascript
+    code.language-javascript.
+
+      players.insert([
+          {
+            name: 'Cristiano Ronaldo',
+            team: 'Real Madrid'
+          },
+
+          {
+            name: 'Luis Suarez',
+            team: 'Liverpool'
+          },
+
+          {
+            name: 'Zinedine Zidane',
+            team: 'Juventus'
+          }
+        ], function (error, inserted) {})
+      
+
+  h2
+    small #4 
+    span Find documents
+
+  pre.language-javascript
+    code.language-javascript.
+
+      players.find({ team: 'FC Barca' },
+        function (error, results) {
+        });
+
+
+  h2
+    small #5 
+    span Sort documents
+
+  pre.language-javascript
+    code.language-javascript.
+
+      players.find({ team: 'FC Barca' })
+
+        // sort players alphabetically by name
+        .sort({ name: 1 }) // or -1 to sort it in reverse order
+
+        .toArray(function (error, results) {
+
+        });
+
+
+  h2
+    small #6 
+    span Limit results
+
+  pre.language-javascript
+    code.language-javascript.
+
+      players.find({ team: 'FC Barca' })
+
+        // limit resultset to 10
+        .limit(10)
+
+        .toArray(function (error, results) {
+
+        });
+
+
+  h2
+    small #7 
+    span Find one result
+
+  pre.language-javascript
+    code.language-javascript.
+
+      players.findOne({ team: 'FC Barca' },
+        function (error, player) {
+
+        });
+      
+
+  h2
+    small #8 
+    span Update a document
+
+  pre.language-javascript
+    code.language-javascript.
+
+      players.update({ name: 'Luis Suarez' }, { $set: {
+        team: 'FC Barca'
+      }}, function (error, updated) {});
+
+
+  h2
+    small #7 
+    span Remove a document
+
+  pre.language-javascript
+    code.language-javascript.
+
+      players.remove({
+          name: 'Zinedine Zidane',
+          team: 'Juventus'
+        },
+        function (error, removed) {});
+
+  h2
+    small #8 
+    span Update all
+
+  p By default, 
+    code update()
+    |  will only update the first document it matches. Use 
+    code { multi: true }
+    |   to apply the update to all matching documents;
+
+  pre.language-javascript
+    code.language-javascript.
+
+      players.update(
+        // all documents
+        {},
+
+        // add the JSON object { stats: { goals: 0 } } to the document
+        {
+          $set: {
+            sport: 'soccer'
+          }
+        },
+
+        // apply to all documents
+        {
+          multi: true
+        },
+
+        // callback
+        function (error, updated) {});
+
+
+
+  hr
