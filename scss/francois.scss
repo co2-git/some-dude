@@ -7,12 +7,15 @@
 "./public/bower_components/foundation/scss/foundation/components/grid",
 "./public/bower_components/foundation/scss/foundation/components/block-grid",
 "./public/bower_components/foundation/scss/foundation/components/labels",
+"./public/bower_components/foundation/scss/foundation/components/tabs",
 "./public/bower_components/foundation/scss/foundation/components/panels",
 "./public/bower_components/foundation/scss/foundation/components/forms",
-"./public/bower_components/foundation/scss/foundation/components/magellan",
-"./public/bower_components/foundation/scss/foundation/components/top-bar",
-"./public/bower_components/foundation/scss/foundation/components/button-groups",
-"./mixins";
+"./public/bower_components/foundation/scss/foundation/components/tables",
+
+
+"./mixins",
+
+"./admin-edit";
 
 $defaultColor: #2D6699;
 
@@ -66,9 +69,16 @@ body {
     font-size: rem-calc(22);
   }
 
+  /* TABLES
+    **************************************** */
+
+  table {
+    width: 100% !important
+  }
+
   // GRID
 
-  .row {
+  .row, .row .row {
     // border: 1px solid red;
     margin-bottom: 22px !important;
 

@@ -1,0 +1,34 @@
+//- *** LAYOUT ***
+//- ---------------------
+extends ../layouts/layout
+
+//- *** MIXINS ***
+//- ---------------------
+include ../mixins/show-search
+
+//- *** MAIN ***
+//- ---------------------
+block page
+  .row.post-page
+    .columns.small-12.medium-8.main
+
+      - if ( post )
+        p.text-center Posted 
+          b=fromNow(post.time.posted)
+        
+        h1=post.title
+
+        .panel.radius.callout.text-center
+          big=post.blurb
+
+        // html
+
+      - else
+        h1 No posts found
+
+        - if ( search )
+          p.panel.callout.text-center There were no posts matching your request: 
+            strong=search
+
+    .columns.small-12.medium-4
+      span +show-search()

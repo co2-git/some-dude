@@ -15,6 +15,7 @@ module.exports = function (req, res, next) {
   });
 
   domain.run(function () {
+    console.log(req.session);
     if ( ! req.session['some-session'] ) {
       res.redirect('/');
     }

@@ -1,0 +1,43 @@
+extends ../layouts/post
+
+block post
+
+  p 
+    a(href='https://www.digitalocean.com/community/tutorials/an-introduction-to-linux-i-o-redirection' target='_blank') Pipes
+    |   in Unix do that: they take the output of left command and feed it as input to the right command. Yet the right command must adapt its code in order to understand the input handled out by the pipe.
+
+  pre.language-bash
+    code.language-bash.
+
+      echo "Hello world" | echo
+      # No output
+      
+      echo "Hello world" | cat
+      # Output: Hello world
+
+
+  p 
+    code echo
+    |   is an example of an executable that does not read from an input when within a pipe. 
+    code cat
+    |   on the other hand knows how to handle input when within a pipe. So how do you read an input from a pipe in your bash code?
+
+
+  pre.language-bash
+    code.language-bash.
+
+      read input
+      echo "$input"
+
+
+  p To use our previous example:
+
+  pre.language-bash
+    code.language-bash.
+
+      echo "Hello world" | echo $(read input; echo "$input")
+      # Output: Hello world
+
+
+
+  hr

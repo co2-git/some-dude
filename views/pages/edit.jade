@@ -1,0 +1,57 @@
+extends ../layouts/layout
+
+block append scripts
+  script(src='/cdn/js/code-editor.js')
+
+block page
+  .row.editor
+    .columns.small-12
+      h1 Edit post #
+        span=post.id
+
+      form(method="POST")
+        input(type='hidden' name='id' value=post.id)
+        fieldset
+          legend Header
+
+          label Title
+            input(type='text' placeholder='Post Title' value=post.title name="title")
+
+          label Slug
+            input(type='text' placeholder='Post Slug' value=post.slug name='slug')
+
+          label Blurb
+            textarea(placeholder='Post Blurb' name='blurb')=post.blurb
+
+        fieldset
+          legend Body
+
+          .row.collapse
+            .columns.small-6
+              button.expand.small.edit-code(type='button') Code
+              button.expand.small.secondary.preview-code(type='button') Preview
+
+          textarea.code(name='post')=md
+
+          section.preview=html
+
+        fieldset
+          legend Footer
+
+          fieldset
+            legend Languages
+
+            each language in languages
+              button.language(type='button'
+                class=(post.languages.filter(function (lg) { return lg.key === language; }).length ? '' : 'secondary' ))=language
+
+            input(type='text' name='languages' value=post.languages.map(function (lg) { return lg.key; }))
+
+          fieldset
+            legend Tags
+
+            p Enter tags separated by commas.
+
+            textarea.tags(name='tags')=post.tags.map(function (tag) { return tag.key; }).join(',')
+
+        button.expand.large.radius Save changes

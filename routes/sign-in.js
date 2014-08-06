@@ -42,18 +42,6 @@ exports.post = function (req, res, next) {
           return;
         }
         else {
-          // res.cookie('some-cookie',
-            
-          //   {
-          //     email: req.body.email
-          //   },
-
-          //   {
-          //     maxAge: 999999,
-          //     domain: req.host,
-          //     secure: true
-          //   });
-
           req.session['some-session'] = {
             email: req.body.email
           };
@@ -63,9 +51,3 @@ exports.post = function (req, res, next) {
       }));
   });
 };
-
-// bcrypt.genSalt(10, function(err, salt) {
-//     bcrypt.hash("aQ1!lD7?-wGDH*672", salt, function(err, hash) {
-//         console.log(arguments);
-//     });
-// });

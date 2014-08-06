@@ -1,0 +1,39 @@
+//- *** MIXIN SHOW POST ***
+//- ---------------------
+//- @abstract       Function to display a blog post
+//- @param          Object post
+//- @param          String view (preview)
+
+mixin show-post(post)
+
+  .row.post
+    .columns.small-12.text-center
+      // i.fa.fa-language
+      span  
+      each language in post.languages
+        a.button.tiny.success.round(href='/search/language/' + language.key)
+          span=language.key
+        span  
+        
+    .columns.small-12
+      h2.text-center 
+      
+        span  
+        a(href='/blog/' + post.id + '/' + post.slug)=post.title
+
+      p.text-center Posted 
+        code=fromNow(post.time.posted)
+        | .
+
+      p.panel.radius
+        big=post.blurb
+
+      p.text-center
+        // i.fa.fa-tags
+
+        span  
+
+        each _tag in post.tags
+          a.button.tiny.round(href='/search/tag/' + _tag.key
+            class=(tag && tag === _tag.key ? '' : 'secondary'))=_tag.key
+          span  

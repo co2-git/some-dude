@@ -22,7 +22,8 @@
           "public/bower_components/foundation/js/vendor/fastclick.js",
           "public/bower_components/foundation/js/foundation/foundation.js",
           "public/bower_components/foundation/js/foundation/foundation.dropdown.js",
-          "public/bower_components/foundation/js/foundation/foundation.abide.js"
+          "public/bower_components/foundation/js/foundation/foundation.abide.js",
+          "public/bower_components/foundation/js/foundation/foundation.tab.js"
         ],
         "dest": "public/cdn/js/foundation.min.js"
       },
@@ -38,12 +39,18 @@
     {
       "service": "mongodb",
       "arguments": [
-        "--dbpath",
-        "data",
-        "--port",
-        "33368"
+        "--dbpath", "data",
+        "--port",   "33368"
       ]
     },
+    
+    {
+      "service": "redis",
+      "arguments": [
+        "--port", "33369"
+      ]
+    },
+    
     {
       "service": "server.js",
       "arguments": []

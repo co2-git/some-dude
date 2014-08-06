@@ -1,1 +1,29 @@
 extends ../layouts/layout
+
+block page
+  .row
+    .columns.small-12
+      h1 Admin View
+
+  .row
+    .columns.small-12
+      table
+        thead
+          tr
+            td ID
+            th Title
+            td Blurb
+            td Started
+            td Updated
+            td Posted
+
+        tbody
+          each post in posts
+            tr
+              td=post.id
+              th
+                a(href='/admin/edit/' + post.id)=post.title
+              td=post.blurb
+              td=post.time.started
+              td=post.time.updated
+              td=post.time.posted

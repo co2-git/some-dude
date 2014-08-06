@@ -1,20 +1,43 @@
 var $ = require;
 
-module.exports = function (req, res, next) {
-  if ( res.error ) {
-    return next();
-  }
-  
-  var domain = $('domain').create();
+var domain = require('domain').create();
 
-  domain.on('error', function (error) {
-    res.error = error;
-    next();
-  });
+domain.on('error', function (error) {
+  console.log('/////////////');
+});
 
-  domain.run(function () {
-    $('../lib/projects').find({}, domain.intercept(function (projects) {
-      res.render('pages/projects', { projects: projects, page: 'projects' });
-    }));
-  });
-};
+domain.run(function () {
+
+  module.exports = function (req, res, next) {
+    // console.log(Object.keys(res));
+
+    // console.log(req._events);
+
+    domain.add(req);
+    domain.add(res);
+
+    // res.on('error', console.log);
+
+    // console.log(res._events);
+
+    // // console.log(Object.keys(res));
+
+    // res.domain.on('error', function (error) {
+    //   throw new Error('GOTCHA');
+    // });
+
+    (function (cb) {
+
+      var d = require('domain').create();
+
+      d.on('error', cb);
+
+      d.run(function () {
+        throw new Error('jjhsjsjhdsjk');
+      });
+
+    })(domain.intercept(function () {}));
+  };
+
+    
+});

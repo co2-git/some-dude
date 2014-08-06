@@ -13,8 +13,13 @@ module.exports = function (req, res, next) {
   });
 
   domain.run(function () {
-    res.render('pages/admin', {
-      loggedin: true
-    });
+    var Post = require('../lib/models/Post').model;
+
+    Post.find({}, domain.intercept(function (posts) {
+      res.render('pages/admin', {
+        loggedin: true,
+        posts: posts
+      });
+    }));
   });
 };

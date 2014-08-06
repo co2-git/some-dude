@@ -1,0 +1,57 @@
+//- *** LAYOUT ***
+//- ---------------------
+extends ../layouts/layout
+
+//- *** MIXINS ***
+//- ---------------------
+include ../mixins/show-search
+
+//- *** MAIN ***
+//- ---------------------
+block page
+  .row
+    .columns.small-12.medium-8
+
+      - if ( posts.length )
+        each post in posts
+          .row.post
+            .columns.small-12.text-center
+              // i.fa.fa-language
+              span  
+              each language in post.languages
+                a.button.tiny.success.round(href='/search/language/' + language.key)
+                  span=language.key
+                span  
+                
+            .columns.small-12
+              h2.text-center 
+              
+                span  
+                a(href='/posts/' + post.id + '/' + post.slug)=post.title
+
+              p.text-center Posted 
+                code=fromNow(post.time.posted)
+                | .
+
+              p.panel.radius.text-center
+                big=post.blurb
+
+              p.text-center
+                // i.fa.fa-tags
+
+                span  
+
+                each _tag in post.tags
+                  a.button.tiny.round(href='/search/tag/' + _tag.key
+                    class=(tag && tag === _tag.key ? '' : 'secondary'))=_tag.key
+                  span  
+
+      - else
+        h1 No posts found
+
+        - if ( search )
+          p.panel.callout.text-center There were no posts matching your request: 
+            strong=search
+
+    .columns.small-12.medium-4
+      span +show-search()

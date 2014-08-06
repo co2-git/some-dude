@@ -1,20 +1,25 @@
 var $ = require;
 
 module.exports = function (req, res, next) {
-  if ( res.error ) {
-    return next();
-  }
-
-  var route = this;
+  var app = this;
   
   var domain = $('domain').create();
 
   domain.on('error', function (error) {
-    res.error = error;
-    next();
+    next(error);
   });
 
   domain.run(function () {
+
+    var Post = require('../lib/models/Post').model;
+
+    Post.find({}, domain.intercept(function (posts) {
+      res.render('pages/posts', {
+        posts: posts
+      })
+    }));
+
+    return;
 
     var searchOptions = {};
     var db;
@@ -46,7 +51,7 @@ module.exports = function (req, res, next) {
       $('async').series(
         {
           posts: function (cb) {
-            db.collection('blog').find(searchOptions)
+            db.collection('posts').find(searchOptions)
               .sort({ 'time.posted': -1 })
               .limit(25)
               .toArray(domain.intercept(function (results) {
@@ -101,7 +106,7 @@ module.exports = function (req, res, next) {
 
         domain.intercept(function (results) {
 
-          var options = route.app.locals;
+          var options = app.locals;
 
           var options2 = {
             page: 'blog',
